@@ -1,6 +1,10 @@
 
 fn main() {
-    
-    let array: [i32; 5] = [10, 20, 30, 40, 50];
-    println!("Array is = {:?}", array);
+
+    let number = [1, 2, 3, 4, 5];
+    println!("Original value : {:?}", number);
+    let slice = &number[0..3];
+    println!("Original value : {:?}", slice);
+
+      
 }

@@ -261,4 +261,117 @@ fn main(){
     println!("array element are = {:?}", numbers);
 }
 ```
-* Here 
+* Here `numbers` is name of the array
+* `[i32; 5]` - `i32` is the predefined data type of array element & `5` is the size of the array.
+* `[10, 20, 30, 40, 50]` are elements inside the array.
+
+##### Array without datatype : 
+
+```rust
+fn main(){
+    // initialization of array without data type
+    let numbers = [1, 2, 3, 4, 5];
+
+    println!("array of numbers = {:?}", numbers);
+}
+```
+* Here we are defining the array without defining the datatype & size.
+
+##### Array with Default value in Rust : 
+
+```rust
+fn main(){
+    // initialization of array with default values 
+    let number: [i32, 5] = [3, 5];
+    println!("array of number = {:?}", number);
+}
+```
+* Here `[i32; 5]` - represent the data type(`i32`), and size(`5`) of the array
+* `[3; 5]` - is a repeat expression, here the value `3` will fill the array `5` times.
+
+* `Note` : we can also omit the datatype and size while creating an array of default values. For example,
+
+```rust
+fn main(){
+    // initialization array with default values :
+    let numbers = [3; 5];
+
+    println!("Array of numbers = {:?}", numbers);
+
+}
+
+```
+
+#### Access Elements of Rust Array : 
+
+* In Rust index starts from `0`
+
+```rust
+fn main(){
+    let color = ["red", "green", "blue"];
+    // accessing value : 
+    println!("1st color : {}",color[0]);
+    println!("2nd color : {}",color[1]);
+    println!("3rd color : {}",color[2]);
+
+}
+
+```
+
+#### Mutable Array in Rust : 
+
+* In rust default variables values are immutable, which means we can't change their value once we declare, so it's same with array.
+* However, we can create a mutable array by using `mut` keyword before assigning it to a variable. For example,
+
+```rust
+fn main(){
+    // creating mutable array in rust : 
+    let mut numbers: [i32; 5] = [1; 5];
+    println!("Original value : {:?}", numbers);
+    numbers[0] = 90;
+    numbers[2] = 90;
+    numbers[4] = 90;
+    println!("After changed : {:?}", numbers);
+    }
+```
+#### Looping Through an Array in Rust :
+* In Rust, we can use the `for..in` loop to iterate through an array. For example, 
+
+```rust
+fn main(){
+    let color = ["red", "green", "blue"];
+
+    // looping through an array to print it's index and value : 
+    for index in 0..3{
+        println!("Index: {} -- Value: {}", index, color[index]);
+    }
+}
+```
+
+### Rust Slice : 
+
+* A rust slice is a data type used to access portion of data stored in collection like array, vector and strings.
+
+* Suppose we have an array,
+
+```rust
+let number = [1, 2, 3, 4, 5];
+```
+*  Now, if we want to extract the 2nd and 3rd elements of this array. We can slice the array like this, 
+```rust
+let slice = &number[0..3];
+```
+* Here, let's look at the right-hand side of the expression,
+  * `&numbers` - specifies a reference to the variable `numbers` (not the actual value)
+  * `{1..3}` - is a notation for slicing the array from *start_index* `0`(inclusive) to *end_index* `3`(exclusive).
+
+```rust
+
+fn main(){
+  let number = [1, 2, 3, 4, 5];
+    println!("Original value : {:?}", number);
+    let slice = &number[0..3];
+    println!("Original value : {:?}", slice);
+}
+      
+```
