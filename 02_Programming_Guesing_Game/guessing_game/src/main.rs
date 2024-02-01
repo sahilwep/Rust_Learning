@@ -1,6 +1,6 @@
 
 fn main() {
     
-    const PI: f32 = 3.14;
-    println!("value of PI  = {}", PI);
+    let array: [i32; 5] = [10, 20, 30, 40, 50];
+    println!("Array is = {:?}", array);
 }

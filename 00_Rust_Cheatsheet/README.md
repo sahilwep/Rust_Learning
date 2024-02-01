@@ -73,7 +73,7 @@ fn main(){
 }
 ```
 
-### Rust DataType : 
+## Rust DataType : 
 
 * We will have mainly four primary data type in rust : 
   * Integer
@@ -81,9 +81,9 @@ fn main(){
   * Boolean
   * Character
 
-#### 1. Integer Type :
+### 1. Integer Type :
 
-##### Signed Integer Type : 
+#### Signed Integer Type : 
 
 ```rust
     let number: i32 = 200;  // here we can use signed value like : positive & negative values.
@@ -94,7 +94,7 @@ fn main(){
 * Here `i` : integer
 * `32` is size of the integer
 
-##### Unsigned Integer Type :
+#### Unsigned Integer Type :
 
 ```rust
     let number: u32 = 200;
@@ -103,7 +103,7 @@ fn main(){
 * For unsigned integer it will take only positive value.
 * Negative value here will generate error.
 
-##### Categories of Integer Data Types in Rust : 
+#### Categories of Integer Data Types in Rust : 
 
 
 |   Size    |   Signed  |   Unsigned    |
@@ -115,11 +115,150 @@ fn main(){
 |   128-bit |    i128   |    u128       |
 
 
-#### 2. Rust Floating Type : 
+### 2. Rust Floating Type : 
 
-* Floating point type are used to store fraction 
+* Floating point type are used to store fraction (numbers with decimal pints).
+* In rust Floating type can be divided into : 
+  * `f32` : for 32-bit floating value.
+  * `f64` : for 64-bit floating value.
 
 ```rust
     let x: f32 = 3.1
 ```
 
+```Rust
+fn main(){
+    // f32 floating pint type
+    let x: f32 = 3.1;
+
+    // f54 floating point type
+    let y: f63 = 43.000232;
+
+    println!("X = {}", x);
+    println!("Y = {}", y);
+}
+```
+* Note : 
+  * `f32` is used for single-precision floating type whereas `f64` is double-precision type. With double-precision `f64` can store data with larger decimal range and is considered more precision.
+
+### 3. Rust Boolean Type : 
+
+* In rust, a boolean data type have two possible values: `true` or `false`. For example,
+
+```rust
+fn main(){
+// boolean value true
+    let flag1: bool = true;
+// boolean value false
+    let flag2: bool = false;
+
+    println!("flag 1 : {0}\nflag 2 : {1}", flag1, flag2);
+}
+```
+### 4. Rust Character Type : 
+
+* Character data type in Rust is used to store single character. For example, 
+
+```rust
+fn main(){
+    // char type : 
+    let value: char = 'z';
+
+    println!("character = {}", value);
+}
+```
+* the value will be store in single quotes.
+* Here, `char` represent the character type and we use single quote to represent a character. 
+* We can also store special character like `$`, `@`, `&`, etc. using the character type. 
+
+* Note : we can also store the number as character using single quotes. for example : 
+```rust
+    let num_char: char = '5';
+```
+
+### Type Inference in Rust 
+
+* So far we have mentioned the data type during the variable declaration. However, in Rust we can create variable without mentioning a datatype. For example : 
+
+```rust
+fn main(){
+    let x = 51;
+    println!("x = {}", x);
+}
+```
+* In this case, Rust automatically identifies the data by looking at the value of the variable `x` and associate it with the variable. This process is known as `Type Inference`.
+
+## Rust Type Casting 
+
+* Type casting allows us to convert variable of one data type to another. In Rust, we use the `as` keyword to perform type casting. For example,
+
+```rust
+fn main(){
+
+    // Create a floating-Point Variable
+    let decimal: f64 = 23.2343;
+    
+    // converting floating point type to integer type 
+    let integer = decimal as u16;
+    
+    println!("Decimal = {}", decimal);
+    println!("Integer = {}", integer);
+}
+```
+
+### Type conversion: Character to integer in Rust
+
+```rust
+fn main(){
+    let character: char = 'A';
+    // convert char type to u8;
+    let integer = character as u8;
+
+    
+    println!("character = {}", character);
+    println!("integer = {}", integer);
+
+}
+```
+* Output : 
+  
+```plain
+character = A
+integer = 65
+```
+
+* Here we have convert `char` type to `u8` integer type, in output we have seen that the vale for `A` is `65`, this value is ASCII value.
+* ASCII : American standards code for information interchange, Every character has some ASCII value.
+
+
+
+## Rust Data Type : 
+
+### Rust Array : 
+
+* An array is list of elements of the same type. For example, if we want to store the first file natural number, we can create an array instead of creating five different variable.
+* In rust array is created by using `[]` square brackets.
+
+```rust
+// array of natural number : 
+let arr = [1, 2, 3, 4, 5];
+```
+
+#### Creating an array in rust : 
+
+* In rust we can create an array in three different ways : 
+  * Array with data type
+  * Array without datatype
+  * Array with default value
+
+##### Array with data type : 
+
+```rust
+fn main(){
+    // initialization of array with data type : 
+    let numbers: [i32; 5] = [10, 20, 30, 40, 50];
+
+    println!("array element are = {:?}", numbers);
+}
+```
+* Here 
