@@ -12,7 +12,6 @@ fn main(){
 ### Print variable : 
 
 * for printing variable we will be using `{}` curly braces to fetch the variables.
-* 
 
 ```Rust
 fn main(){
@@ -309,20 +308,136 @@ error[E0604]: only `u8` can be cast as `char`, not `f32`
 
 ## Rust Operators : 
 
+* Operators are Symbols that performs operations on value or variable
+* Rust programming provides various operators that can be categorized into the following major categories : 
+  * Arithmetic Operator 
+  * Assignment Operator
+    * Compounding Assignment Operator 
+  * Logical Operators 
+  * Comparison Operators 
+
+### 1. Arithmetic Operator in Rust : 
+
+
+|       Operators    |  Example   |
+|--------------------|------------|
+|   `+` ( Addition ) |  `a + b`   |
+|   `-` ( Subtraction ) |  `a - b`   |
+|   `*` ( Multiplication ) |  `a * b`   |
+|   `/` ( Division ) |  `a / b`   |
+|   `%` ( Remainder ) |  `a % b`   |
 
 
 
+### Assignment Operator : 
+
+```rust
+let mut x = 1;
+```
+#### Compound Assignment Operator : 
 
 
+|       Operators    |  Example   | Equivalent To   |
+|--------------------|------------|---------|
+|   `+=` ( Addition assignment ) |  `a += b`   | `a = a + b` |
+|   `-=` ( Subtraction assignment) |  `a -= b`   | `a = a - b` |
+|   `*=` ( Multiplication assignment) |  `a *= b`   | `a = a * b` |
+|   `/=` ( Division assignment) |  `a /= b`   | `a = a / b` |
+|   `%=` ( Remainder assignment) |  `a %= b`   | `a = a % b` |
+
+```rust
+    let mut x = 1;
+    // compound assignment operator
+    x += 3;   // equivalent to x = x + 3
+```
+
+### Comparison Operator :
+
+* We use Comparison operator to compare two values or variable. for example,
+
+```rust
+    6 > 5
+```
+* Here, the relation operator `>` (greater than) checks if `6` is grater than `5`. 
+* A relation operator returns : 
+  * `true` if the relation b/w two value is correct.
+  * `false` if the relation is incorrect.
+
+* `NOTE` : Relation operator is also known as Comparison operator.
+
+| Operator | Example | Description |
+|----------|---------|-------------|
+| `>` (Greater than)    |   `a > b` |   `true` if `a` is grater than `b` | 
+| `<` (Less than)    |   `a < b` |   `true` if `a` is less than `b` | 
+| `>=` (Grater than or equal to)    |   `a >= b` |   `true` if `a` is grater or equal to `b` | 
+| `<=` (Less than or equal to)    |   `a <= b` |   `true` if `a` is Less or equal to `b` | 
+| `<=` (Less than or equal to)    |   `a <= b` |   `true` if `a` is Less or equal to `b` | 
+| `==` (Equal to)    |   `a == b` |   `true` if `a` is equal to `b` | 
+| `!=` (Equal to)    |   `a != b` |   `true` if `a` is not equal to `b` | 
+
+### Logic Operators :
+
+* We use logical operators to perform logical decision decisions or operations. 
+* Result will be in `true` or `false`, depending on the conditions. For example : 
+```rust
+(5 < 6) && (7 > 4)
+```
+* This will result `true`, as both the condition are true.
+* There are mainly 3 logical operators in Rust.
+
+| Operator  | Example   |   Description |
+|-----------|-----------|---------------|
+|   `&&` ( logical AND )    | `exp1 && exp2`    |   returns `true` if both `exp1` and `exp2` are `true` |
+|   `\|\|` ( logical OR )    | `exp1 && exp2`    |   returns `true` if any one `exp1` or `exp2` is `true` |
+|   `!` ( logical OR )    | `!exp`    |   returns `true` if expression is `false`, if it is `true` |
+
+* `Note` : logical `AND` and `OR` operator are also called short-circuiting logical operators because these operators don't evaluate the whole expression in these case they don't need to. For example, in this expression
+```rust
+false || true || false
+```
+* The `||` operator evaluates to `true` because once the compiler sees a single `true` expression, it skips the evaluation and return `true` directly.
+
+## Rust if..else : 
+
+### Boolean Expression
+
+* Before we learn about `if..else` expression, let's quickly understand boolean expression.
+* Boolean expression is an expression which return the value either `true` or `false` as the output.
+
+```rust
+fn main(){
+    let x = 7;
+
+    // example of boolean expression
+    let condition = x > 5;
+
+    println!("{}", condition)
+}
+```
+* output will be `true`.
+
+### Rust if : 
+
+```rust
+    if condition{
+        // block to execute
+    }
+```
+* If the condition evaluates to : 
+  * `true` - the code inside the `if` block is executed.
+  * `false` - the code inside of the block is not executed.
+
+```rust
+fn main(){
+    let number = 10;
+
+    if number > 0 {
+        p
+    }
 
 
-
-
-
-
-
-
-
+}
+```
 
 
 
