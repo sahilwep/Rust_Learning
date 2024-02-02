@@ -1,10 +1,13 @@
 
 fn main() {
 
-    let number = [1, 2, 3, 4, 5];
-    println!("Original value : {:?}", number);
-    let slice = &number[0..3];
-    println!("Original value : {:?}", slice);
+  
+    let decimal: f32 = 65.2342;
 
+    // converting integer to char using as keyword
+    let character = decimal as char;
+
+    println!("decimal = {}", decimal);
+    println!("Character = {}", character);
       
 }

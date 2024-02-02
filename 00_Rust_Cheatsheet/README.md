@@ -230,6 +230,121 @@ integer = 65
 * Here we have convert `char` type to `u8` integer type, in output we have seen that the vale for `A` is `65`, this value is ASCII value.
 * ASCII : American standards code for information interchange, Every character has some ASCII value.
 
+### Error while Converting integer to character : 
+
+* Rust allows `u8` integer size only.
+
+```rust
+fn main(){
+    let integer: i32 = 65;
+
+    // converting integer to char using as keyword
+    let character = integer as char;
+
+    println!("Integer = {}", integer);
+    println!("Character = {}", character);
+}
+``` 
+
+* Here we got an error in output :
+
+```plain
+error[E0604]: only `u8` can be cast as `char`, not `u32`
+ --> src/main.rs:8:21
+  |
+8 |     let character = integer as char;
+  |                     ^^^^^^^^^^^^^^^
+  |                     |
+  |                     invalid cast
+  |                     help: try `char::from_u32` instead: `char::from_u32(integer)`
+
+For more information about this error, try `rustc --explain E0604`.
+error: could not compile `guessing_game` (bin "guessing_game") due to previous error
+```
+* If we go on `rustc --explain E0604` we will know that, char is unicode scalar value, Unicode scalar value are small integer number & fit in the range of `u8` `unsigned 8-bit`.
+  
+### Type Casting: Boolean to integer in Rust 
+
+```rust
+fn main(){
+    let boolean1: bool = false;
+    let boolean2: bool = true;
+
+    // convert boolean type to integer
+    let integer1 = boolean1 as i32;
+    let integer2 = boolean2 as i32;
+}
+```
+
+* Here `False` will convert to value `0`, & `True` will be `1`.
+
+### Limitation of Type Casting : 
+
+* There are limitations while performing type casting in Rust. Not all datatype are converted to one another.
+
+* example : we can't covert `floating` to a `character`.
+
+```rust
+fn main(){
+    let decimal: f32 = 65.2133;
+
+    // convert float to char
+    let character = decimal as char;
+    
+    println!("decimal = {}", decimal);
+    println!("character = {}", character);
+}
+
+```
+* output generate error : 
+
+```plain
+error[E0604]: only `u8` can be cast as `char`, not `f32`
+ --> main.rs:5:19
+  |
+5 |   let character = decimal as char;
+  |                   ^^^^^^^^^^^^^^^ invalid cast
+```
+
+
+## Rust Operators : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Rust Data Type : 
@@ -375,3 +490,12 @@ fn main(){
 }
       
 ```
+* Note : A slice is not the actual data like integer or floats, but a reference/ pointer  to the block. That's why we have used the `&` symbol before the variable name.
+
+#### Omit Indexes of Rust Slice : 
+
+* While slicing a data collection, Rust allows us to omit either the start index or the end index or both from it's Syntax.
+
+```rust
+&variable[start_index..end_index]
+```[]
