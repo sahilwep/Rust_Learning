@@ -1,7 +1,7 @@
 # Rust General Concepts : 
 
 ## Printing Output : 
-* For printing we can use `print!()` or `println!()` macro.
+* For printing text we can use `print!()` or `println!()` macro.
 
 ```Rust
 fn main(){
@@ -36,7 +36,7 @@ fn main(){
 ```
 * By default rust create every variable as immutable, means once it's declare we can't change the value of it..
 
-* With using `mut` Keyword during variable declaration to make our variable as mutable.
+* With using `mut` Keyword during variable declaration we can make our variable as mutable.
   
 ### Rules for naming Variables in Rust : 
 
@@ -373,7 +373,7 @@ let mut x = 1;
 | `<=` (Less than or equal to)    |   `a <= b` |   `true` if `a` is Less or equal to `b` | 
 | `<=` (Less than or equal to)    |   `a <= b` |   `true` if `a` is Less or equal to `b` | 
 | `==` (Equal to)    |   `a == b` |   `true` if `a` is equal to `b` | 
-| `!=` (Equal to)    |   `a != b` |   `true` if `a` is not equal to `b` | 
+| `!=` (Not Equal)    |   `a != b` |   `true` if `a` is not equal to `b` | 
 
 ### Logic Operators :
 
@@ -426,18 +426,6 @@ fn main(){
 * If the condition evaluates to : 
   * `true` - the code inside the `if` block is executed.
   * `false` - the code inside of the block is not executed.
-
-```rust
-fn main(){
-    let number = 10;
-
-    if number > 0 {
-        p
-    }
-
-
-}
-```
 
 
 
@@ -613,4 +601,76 @@ fn main(){
 
 ```rust
 &variable[start_index..end_index]
-```[]
+```
+
+##### 1. Omitting the stating index of a slice
+
+```rust
+fn main(){
+    let numbers = [1,2,3,4,5];
+
+    // omit the start index
+    let slice = &numbers[..3];
+
+    println!("array = {:?}", numbers);
+    println!("slice = {:?}", slice);
+}
+```
+* output : 
+
+```text
+array = [1,2,3,4,5]
+slice = [1,2,3]
+```
+
+* if we use `&numbers[..3]`, it will start slicing from 0th index.
+
+##### 2. Omitting the End index of a slice
+
+```rust
+fn main(){
+    let numbers = [1, 2, 3, 4, 5];
+    // omit the end index
+    let slice = &numbers[2..];
+
+    println!("array = {:?}", numbers);
+    println!("slice = {:?}", slice);
+}
+```
+* output : 
+
+```plain
+    array = [1,2,3,4,5]
+    slice = [3,4,5]
+```
+
+* Here we are slicing it from starting index but we didn't specify the end index then it will slice an array till the last value.
+* Note : the first value that we provided is excluded in output.
+
+3. Omitting both start and end index of slice
+
+```rust
+fn main(){
+    let numbers = [1,2,3,4,5];
+    
+    // omit the start index and the end index 
+    // reference the whole array
+    let slice = &numbers[..]
+
+    println!("array = {:?}", numbers);
+    println!("slice = {:?}", slice);
+}
+
+```
+* output
+
+```text
+array = [1,2,3,4,5]
+slice = [1,2,3,4,5]
+```
+
+* Here, if we didn't specify the starting and ending index, then it will slice whole the array, or we can say it will get all the value.
+
+
+#### Mutable Slice in Rust
+
