@@ -24,6 +24,11 @@ fn main(){
     print!("Rust is fun! \n I love Learning Rust"); // we can use \n \t etc...
 }
 ```
+
+
+
+
+
 ## Rust Variables & Mutability : 
 
 ```Rust
@@ -71,6 +76,12 @@ fn main(){
     print("value of PI  = {}", PI);
 }
 ```
+
+
+
+
+
+
 
 ## Rust DataType : 
 
@@ -186,6 +197,13 @@ fn main(){
 }
 ```
 * In this case, Rust automatically identifies the data by looking at the value of the variable `x` and associate it with the variable. This process is known as `Type Inference`.
+
+
+
+
+
+
+
 
 ## Rust Type Casting 
 
@@ -306,6 +324,14 @@ error[E0604]: only `u8` can be cast as `char`, not `f32`
 ```
 
 
+
+
+
+
+
+
+
+
 ## Rust Operators : 
 
 * Operators are Symbols that performs operations on value or variable
@@ -397,6 +423,15 @@ false || true || false
 ```
 * The `||` operator evaluates to `true` because once the compiler sees a single `true` expression, it skips the evaluation and return `true` directly.
 
+
+
+
+
+
+
+
+
+
 ## Rust if..else : 
 
 ### Boolean Expression
@@ -427,6 +462,207 @@ fn main(){
   * `true` - the code inside the `if` block is executed.
   * `false` - the code inside of the block is not executed.
 
+```rust
+fn main(){
+    let number = 10;
+
+    // condition to check if number is grater than zero
+    if number > 0 {
+        println!("{} is grater than 0", number);
+    }
+    println!("End of program");
+}
+```
+* Here we don't use parenthesis like c, c++ or other language to specify condition inside it, although it will run, but cargo considered it as bad practice.
+* however, when we write multiple & complex condition it's good to specify the condition in parenthesis, so that the readability is increased...
+
+### Rust if..else Expressions
+
+```rust
+if condition {
+    // execute when the condition is true
+} else {
+    // execute when the condition is false
+}
+```
+
+### Rust if..else if Expressions 
+
+* We can evaluate **multiple conditions** by combining `if` and `else` is an `else if` expression.
+
+```rust
+if condition1 {
+    // code block 1
+} else if condition2 {
+    // code block 2
+} else {
+    // code block 3
+}
+```
+
+*  if `condition1` is true then `condition2` and `code block 3` is skipped.
+*  if `condition2` is true then `condition1` and `code block 3` is skipped.
+*  if `condition1` and `condition2` are false, then  `code block 3` is executed.
+
+### Nested if..else
+
+* We an use `if..else` expression inside the body of other `if..else` expression. it is known as nested `if..else` in Rust. example,
+
+```rust
+fn main(){
+    let number = -2;
+
+    if number < 0  {
+        if number  ==  -2 {
+            println!("the current number is -2");
+        } else {
+            println!("the current number is {}", number);
+        }
+    } 
+}
+```
+
+
+
+
+
+## Rust Loop 
+
+* In rust we have three different keywords to execute a code block multiple times:
+  * `loop`
+  * `while`
+  * `for`
+
+### Rust Loop Expression
+
+* In Rust, we use the `loop` expression to indefinitely execute a block of code. if we use a `loop`, the code execution inside of the loop code block doesn't stop and runs forever. example,
+
+```rust
+fn main(){
+    // loop expression
+    loop {
+        println!("Loop forever!");
+    }
+}
+```
+
+* This example code will print **Loop forever!** indefinitely unless the user terminates the program. Since the loop runs forever, it is also known as an infinite loop.
+
+#### Terminating loop in rust : 
+
+* we can use some `counter` with some condition to break out from loop, or we can use `break` keyword to break the loop execution.
+
+* **NOTE:** In Rust, we often user a loop `loop` and `break` together
+
+* Example : Print first 10 natural number.
+
+```rust 
+fn main(){
+    let mut num = 1;
+    loop{
+        if num == 11 {
+            break;
+        }
+        println!("{}",num);
+        num += 1;
+    }
+} 
+```
+
+### Rust while loop Expression 
+
+* We use the `while` loop to execute a code block till the condition is `true`. The syntax for the `while` expression is : 
+
+```rust
+    while condition {
+        // code block
+    }
+    // code block outside while loop
+```
+
+* Here, until the condition is `true`, loop will execute the block of code again and again.
+
+* Example : printing table of 20
+
+```rust
+fn main(){
+    let num = 20;
+    let mut cnt = 1;
+    while cnt <= 10 {
+        println!("{} x {} = {}", num, cnt, num*cnt);
+        cnt += 1;
+    }
+} 
+```
+
+#### Nested while loop 
+
+* we can use loop inside loop, example
+
+```rust
+/*
+// we have to print this pattern : 
+
+* * * *
+* * * *
+* * * *
+* * * *
+
+*/
+
+fn main(){
+    let mut row = 4;
+    let mut cols = 4;
+    while row > 0 {
+        while cols > 0 {
+            print!("* ");
+            cols -= 1;
+        }
+        println!("");
+        row -= 1;
+        cols = 4;   
+    }
+} 
+```
+
+### Rust for loop Expression 
+
+* The `for` loop in Rust is used to iterate a range of numbers. The syntax of `for` loop is:
+
+```rust
+for variable in lower_bound_number..upper_bound_number {
+    // code block
+}
+```
+* Let's take a look at an example,
+
+```rust
+fn main(){
+    for i in 1..10 {
+        print!("{} ", i);
+    }
+}
+```
+* output : 
+```text
+1 2 3 4 5 6 7 8 9 
+```
+
+* Here, the `lower_bound_number` is included & `upper_bound_number` is excluded.
+
+* **NOTE:** The for loop is also known as a `for-in` loop because of its syntax.
+
+* Example : Sum of first 10 natural number : 
+
+```rust
+fn main(){
+    let mut sum = 0;
+    for i in 1..11 {
+        sum += i;
+    }
+    println!("Sum is {sum}");
+}
+```
 
 
 
@@ -434,6 +670,35 @@ fn main(){
 
 
 
+## Rust Break and Continue : 
+
+* During loop execute a block of code multiple times. However sometimes we might need to alter the flow of a loop by terminating it execution or skipping an iteration.
+* In such case we use the Rust `break` and `continue` to alter the normal execution of loops. For example,
+    * `break` - terminates the loop.
+    * `continue` - skips the current iteration of the loop and moves on to the next.
+
+* Example : 
+
+```rust
+fn main(){
+
+    let mut num = 0;
+    loop {
+        num += 1;
+        if num == 5 {
+            continue;
+        }
+        if num == 11{
+            break;
+        }
+        print!("{num} ");
+    }
+}
+```
+* Output : 
+```text
+1 2 3 4 6 7 8 9 10
+```
 
 
 
@@ -441,18 +706,7 @@ fn main(){
 
 
 
-
-
-
-
-
-
-
-
-
-## Rust Data Type : 
-
-### Rust Array : 
+## Rust Array : 
 
 * An array is list of elements of the same type. For example, if we want to store the first file natural number, we can create an array instead of creating five different variable.
 * In rust array is created by using `[]` square brackets.
@@ -462,14 +716,14 @@ fn main(){
 let arr = [1, 2, 3, 4, 5];
 ```
 
-#### Creating an array in rust : 
+### Creating an array in rust : 
 
 * In rust we can create an array in three different ways : 
   * Array with data type
   * Array without datatype
   * Array with default value
 
-##### Array with data type : 
+#### Array with data type : 
 
 ```rust
 fn main(){
@@ -483,7 +737,7 @@ fn main(){
 * `[i32; 5]` - `i32` is the predefined data type of array element & `5` is the size of the array.
 * `[10, 20, 30, 40, 50]` are elements inside the array.
 
-##### Array without datatype : 
+#### Array without datatype : 
 
 ```rust
 fn main(){
@@ -495,7 +749,7 @@ fn main(){
 ```
 * Here we are defining the array without defining the datatype & size.
 
-##### Array with Default value in Rust : 
+#### Array with Default value in Rust : 
 
 ```rust
 fn main(){
@@ -520,7 +774,38 @@ fn main(){
 
 ```
 
-#### Access Elements of Rust Array : 
+##### Revision: Different ways to create array in rust 
+
+```rust
+fn main(){
+    // array without datatype
+    let a = [1, 2, 3, 4, 5];
+
+    // array with datatype and size
+    let b: [i32; 5] = [1, 2, 3, 4, 5];
+
+    // array with default value;
+    let c = [1; 5]; 
+    let d: [i32; 5] = [1; 5];   // we can declare c with this way also
+
+    println!("a = {:?}", a);
+    println!("b = {:?}", b);
+    println!("c = {:?}", c);
+    println!("d = {:?}", d);
+}
+```
+* Output : 
+
+```text
+a = [1, 2, 3, 4, 5]
+b = [1, 2, 3, 4, 5]
+c = [1, 1, 1, 1, 1]
+d = [1, 1, 1, 1, 1]
+```
+
+
+
+### Access Elements of Rust Array : 
 
 * In Rust index starts from `0`
 
@@ -533,10 +818,12 @@ fn main(){
     println!("3rd color : {}",color[2]);
 
 }
-
 ```
+* We can access array element using indexing.
 
-#### Mutable Array in Rust : 
+
+
+### Mutable Array in Rust : 
 
 * In rust default variables values are immutable, which means we can't change their value once we declare, so it's same with array.
 * However, we can create a mutable array by using `mut` keyword before assigning it to a variable. For example,
@@ -552,7 +839,7 @@ fn main(){
     println!("After changed : {:?}", numbers);
     }
 ```
-#### Looping Through an Array in Rust :
+### Looping Through an Array in Rust :
 * In Rust, we can use the `for..in` loop to iterate through an array. For example, 
 
 ```rust
@@ -566,7 +853,16 @@ fn main(){
 }
 ```
 
-### Rust Slice : 
+
+
+
+
+
+
+
+
+
+## Rust Slice : 
 
 * A rust slice is a data type used to access portion of data stored in collection like array, vector and strings.
 
@@ -595,7 +891,7 @@ fn main(){
 ```
 * Note : A slice is not the actual data like integer or floats, but a reference/ pointer  to the block. That's why we have used the `&` symbol before the variable name.
 
-#### Omit Indexes of Rust Slice : 
+### Omit Indexes of Rust Slice : 
 
 * While slicing a data collection, Rust allows us to omit either the start index or the end index or both from it's Syntax.
 
@@ -603,7 +899,7 @@ fn main(){
 &variable[start_index..end_index]
 ```
 
-##### 1. Omitting the stating index of a slice
+#### 1. Omitting the stating index of a slice
 
 ```rust
 fn main(){
@@ -625,7 +921,7 @@ slice = [1,2,3]
 
 * if we use `&numbers[..3]`, it will start slicing from 0th index.
 
-##### 2. Omitting the End index of a slice
+#### 2. Omitting the End index of a slice
 
 ```rust
 fn main(){
@@ -647,7 +943,7 @@ fn main(){
 * Here we are slicing it from starting index but we didn't specify the end index then it will slice an array till the last value.
 * Note : the first value that we provided is excluded in output.
 
-3. Omitting both start and end index of slice
+#### 3. Omitting both start and end index of slice
 
 ```rust
 fn main(){
@@ -671,6 +967,67 @@ slice = [1,2,3,4,5]
 
 * Here, if we didn't specify the starting and ending index, then it will slice whole the array, or we can say it will get all the value.
 
+* `**Note**`: if we want to slice in certain range, we can do with specifying the range, like [2..4], in array of size 5.
 
-#### Mutable Slice in Rust
+
+
+
+
+### Mutable Slice in Rust
+
+* We can create a mutable slice by using the `&mut` keyword.
+* Syntax will be : `let slice = &mut data_structure[start_index..end_index];`
+
+```rust
+let mut number = [1,2,3,4,5];
+let slice = &mut number[1..4];
+```
+* Once the slice is marked as mutable, we can change value inside the slice. Let's see an example,
+
+```rust
+fn main(){
+
+    let mut number = [1,2,3,4,5];
+    
+    println!("number = {:?}", number);
+
+    let slice = &mut number[..4];
+    
+    println!("slice = {:?}", slice);
+    
+    slice[1] = 99;
+    
+    println!("changed slice = {:?}", slice);
+
+}
+```
+* Output : 
+
+```plain
+number = [1, 2, 3, 4, 5]
+slice = [1, 2, 3]
+changed slice = [1, 99, 3]
+```
+
+* `**NOTE : **` attempting to create a mutable slice from the immutable array directly will result in a compilation error because Rust doesn't allow borrowing mutable references to immutable data. Example : 
+
+```rust
+fn main() {
+    let data = [1, 2, 3, 4, 5];
+
+    // This line will not compile
+    let slice: &mut [i32] = &mut data;
+    // Error: cannot borrow immutable local variable `data` as mutable
+}
+```
+
+
+
+
+
+
+
+## Rust Tuple : 
+
+
 
