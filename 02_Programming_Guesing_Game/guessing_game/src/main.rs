@@ -1,14 +1,15 @@
 fn main(){
 
-    let mut num = 0;
-    loop {
-        num += 1;
-        if num == 5 {
-            continue;
-        }
-        if num == 11{
-            break;
-        }
-        print!("{num} ");
-    }
+    let mut number = [1,2,3,4,5];
+    
+    println!("number = {:?}", number);
+
+    let slice = &mut number[1..3];
+    
+    println!("slice = {:?}", slice);
+    
+    slice[1] = 99;
+    
+    println!("changed slice = {:?}", slice);
+
 }
