@@ -205,7 +205,7 @@ fn main(){
 
 
 
-## Rust Type Casting 
+## Rust Type Casting :
 
 * Type casting allows us to convert variable of one data type to another. In Rust, we use the `as` keyword to perform type casting. For example,
 
@@ -526,7 +526,7 @@ fn main(){
 
 
 
-## Rust Loop 
+## Rust Loop :
 
 * In rust we have three different keywords to execute a code block multiple times:
   * `loop`
@@ -1029,5 +1029,66 @@ fn main() {
 
 ## Rust Tuple : 
 
+* Tuple can hold different datatype. For example,
 
+```rust
+let tuple = ("hello", 5, 5.34);
+```
 
+* In Rust, we have used parenthesis or small bracket `( )` to create a tuple and it is able to store different types of value.
+
+* **NOTE :** In Rust, tuples have a fixed size and cannot grow or shrink after they have been created.
+
+### Creating a Tuple in Rust : 
+
+* In Rust, we can create a tuple in two different ways:
+    1. Tuple with datatype
+    2. Tuple without datatype
+
+#### 1. Tuple with datatype 
+
+* While creating a tuple, we can mention the type of data it is storing. For example,
+```rust
+// create a tuple with datatype : 
+let student_info: (&str, u8, f32) = ("Prince", 28, 9.99);
+```
+* Here, 
+  * let `student_info: (&str, u8, f32)` - specifies the variable name and the data type of tuple elements.
+  * `("Prince", 28, 9.99)` - specifies the elements of the tuple.
+
+* Example : 
+```rust 
+fn main(){
+    // initialization of tuple with datatype
+    let tuple: (&str, u8, f32) = ("Prince", 28, 9.99);
+    
+    println!("Tuple Content = {:?}", tuple);
+}
+```
+* Output : 
+
+```plain
+Tuple Content = ("Prince", 28, 9.99)
+```
+
+#### 2. Tuple without Data Type in Rust 
+
+* We can define tuple without having consideration of datatype of data,
+* Syntax
+
+```rust
+// create a tuple without datatype
+let student_info = ("Prince", 28, 9.99);
+```
+
+* Example: tuple without datatype : 
+```rust
+fn main(){
+    // initialization of tuple without datatype
+    let tuple = ("Prince", 28, 9.99);
+    
+    println!("Tuple Content = {:?}", tuple);
+}
+```
+
+### Accessing Elements in a Tuple : 
