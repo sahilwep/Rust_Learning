@@ -1401,6 +1401,158 @@ Person height = 190
 
 ## Rust Function : 
 
+* Function are reusable block of code, which used to perform a specific task. example, if we want to create a program to add two numbers, then we can create a Rust function to add to numbers. Now, we can reuse this same function whenever we add two numbers.
+
+### Defining a Function in Rust 
+
+* for defining a function we use `fn` keyword. The syntax of a function is, 
+
+```rust
+fn function_name(arguments){
+    // code
+
+}
+```
+* Example : 
+```rust 
+fn greet(){
+    // code
+
+}
+```
+* Here, 
+  * `fn` - keyword used to create a function in Rust.
+  * `greet()` - name of the function.
+  * `// code` - function body
+  * `{ }` - start and end of the function body.s
+
+* Now let's complete the `greet()` function to print `hello world!`.
+
+```rust
+fn greet(){
+    println!("hello World!");
+}
+
+fn main(){
+
+}
+```
+* When we run the code, we will not get any output. This is because here we are just defining a function. To execute a function, we need to call it.
+
+### Calling a Function : 
+
+* We use the name of the function and parentheses `()` to call a function .
+* Let's complete the above example now.
+
+```rust
+fn greet(){
+    println!("Hello World!");
+}
+
+fn main(){
+    // function call : 
+    greet();
+    
+}
+```
+* Inside `main()`, we can call function.
+* `main()` is special type of function, when we execute the program, it's the first function that executes.
+
+* **Example :** Function to Add two numbers in Rust
+```rust
+// function to add two numbers in Rust
+fn add(){
+    let a = 5;
+    let b = 10;
+    let sum = a + b;
+    println!("Sum of a and b = {}", sum);
+}
+
+fn main(){
+    // function call 
+    add();
+}
+```
+* Output : 
+```plain
+Sum of a and b = 15
+```
+
+*** 
+* **NOTE :** Rust code uses a small case as the convention for defining a function name. An extended function name with multiple words will have underscores in between words.
+
+* The convention we are describing suggests using lowercase letters for function names and using underscores to separate words in longer function names. examples,
+
+```rust
+// Function name with a single word
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+// Function name with multiple words
+fn calculate_total_price(item_price: f64, quantity: i32) -> f64 {
+    item_price * quantity as f64
+}
+```
+* Or we can use `#![allow(non_snake_case)]` on top our code to ignore the names & casing.
+*** 
+
+### Function parameters in Rust
+
+* We can define our parameter inside the parenthesis `()`.
+
+```rust
+// function to add two numbers in Rust
+fn add(a: i32, b: i32){
+    let sum = a + b;
+    println!("Sum of a and b = {}", sum);
+}
+
+fn main(){
+    let a = 5;
+    let b = 10;
+
+    // function call 
+    add(a,b);
+}
+```
+
+* Here, during function definition we have passed the name of the variable and their datatype like : `a: i32`. Then the numbers of parameters, like in our case we have two, `a` and `b`.
+* Also during calling we can pass the arguments to function call as function name then inside the parenthesis we can pass the value : `add(a,b)`.
+
+### Function with Return value in Rust
+
+* For making function to return something we provide `-> i32` before opening curly brackets `{`
+* Inside the function body we use `return` keyword to return our result.
+* Example : 
+
+```rust
+// function to add two numbers in Rust
+fn add(a: i32, b: i32) -> i32 {
+    let sum = a + b;
+    return sum;
+}
+
+fn main(){
+    let a = 5;
+    let b = 10;
+    
+    // function call inside println
+    println!("Sum of a and b = {}", add(a,b));
+}
+```
+* Output : 
+
+```plain
+Sum of a and b = 15
+```
+
+
+
+
+
+
+## Rust Variable Scope : 
 
 
 

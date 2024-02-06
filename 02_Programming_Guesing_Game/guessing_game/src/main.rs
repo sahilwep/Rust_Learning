@@ -1,23 +1,14 @@
+
+// function to add two numbers in Rust
+fn add(a: i32, b: i32) -> i32 {
+    let sum = a + b;
+    return sum;
+}
+
 fn main(){
-    // Defining a Person struct
-    struct Person {
-        name: String,
-        age: u8,
-        height: u8
-    }
-
-    // instantiate Person struct : 
-    let person1 = Person{
-        name: String::from("Prince"),
-        age: 23,
-        height: 190
-    };
-
-    // destructure person struct into name, age, and height variables
-    let Person {name, age, height} = person1;
-
-    // accessing the values of person1 struct
-    println!("Person name = {}", name);
-    println!("Person age = {}", age);
-    println!("Person height = {}", height);
+    let a = 5;
+    let b = 10;
+    
+    // function call inside println
+    println!("Sum of a and b = {}", add(a,b));
 }
