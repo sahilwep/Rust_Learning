@@ -1092,3 +1092,117 @@ fn main(){
 ```
 
 ### Accessing Elements in a Tuple : 
+
+* Each element in a tuple is associated with a unique sequence of numbers. The number is known as the `tuple index` or just `index`.
+* Suppose we have a tuple,
+```rust
+let random_tuple: (&str, u8, f32) = ("Prince", 23, 99.9);
+```
+* The tuple indexes of the random_tuple looks like,
+  * `random_tuple.0` - access the element at index 0 (first element)
+  * `random_tuple.1` - access the element at index 1 (second element)
+  * `random_tuple.2` - access the element at index 2 (third element)
+
+```rust
+fn main(){
+    let random_tuple: (&str, u8, f32) = ("Prince", 23, 99.9);
+
+    // accessing first element at index 0 
+    println!("Value at Index 0 = {}", random_tuple.0);
+
+    // accessing second element at index 1 
+    println!("Value at Index 1 = {}", random_tuple.1);
+
+    // accessing third element at index 2
+    println!("Value at Index 2 = {}", random_tuple.2);
+}
+```
+* Output :
+```plain
+Value at Index 0 = Prince
+Value at Index 1 = 23
+Value at Index 2 = 99.9
+```
+
+* **Note :** The tuple index always starts at 0; hence the first element of the tuple is at position 0, not 1.
+
+
+### Mutable Tuple 
+
+* In Rust, a tuple is immutable, which means we cannot change its element once it is created.
+* However, we can create a mutable array by using `mut` keyword before assigning it to a variable. For example,
+
+```rust
+// create a mutable tuple
+let mut mountains = ("Prince", 23, 99.9);
+```
+* Let's take a look at an example,
+```rust
+fn main(){
+    let mut random_tuple: (&str, u32, f32) = ("Prince", 23, 99.9);
+
+    println!("Original tuple : {:?}", random_tuple);
+
+    // changing hte value of tuple.
+    random_tuple.0 = "Sahil";
+    random_tuple.1 = 12204019;
+
+    println!("Changed tuple : {:?}", random_tuple);
+}
+```
+* Output : 
+```plain
+Original tuple : ("Prince", 23, 99.9)
+Changed tuple : ("Sahil", 12204019, 99.9)
+```
+
+### Destructuring a Tuple :
+
+* We can break down tuple into smaller variable in Rust, Known as Destructuring.
+* Suppose we have a tuple,
+```rust
+let tuple = ("Ramesh jonas", 38, 172);
+```
+* Now we can perform Destructuring using,
+```rust
+let (name, age, height) = tuple;
+```
+* Now, we access the `name`, `age`, and `height` variable directly without using tuple indexes.
+  * `name` name of `tuple.0`
+  * `age` name of `tuple.1`
+  * `height` name of `tuple.2`
+
+* We can name variable as we like while Destructuring a tuple.
+
+* **Note :** Destructuring a tuple is also known as **tuple unpacking**.
+
+* Example : Destructuring a Tuple
+
+```rust
+fn main(){
+
+    let tuple_name = ("Ramesh jonas", 38, 172);
+
+    // Destructuring a Tuple
+    let (name, age, height) = tuple_name;
+
+    println!("name = {name}");
+    println!("age = {age}");
+    println!("height = {height}");
+}
+```
+* Output : 
+
+```plain
+name = Ramesh jonas
+age = 38
+height = 172
+```
+
+
+
+
+
+
+## Rust Struct : 
+
