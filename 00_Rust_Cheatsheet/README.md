@@ -1206,3 +1206,201 @@ height = 172
 
 ## Rust Struct : 
 
+* Rust structs or structures are user-defined data types used to store different types of data together.
+* Suppose we want to store a person's name, age, and height. To do this, we can create variables for each property/field.
+
+```rust
+let personName: String = String::from("Sammy Kamkar");
+let personAge: u8 = 38;
+let personHeight: u8 = 178;
+```
+* This problem with this approach is we have to maintains all these variables separately. To store these fields for more than one person, we will have to create different variables for each person.
+
+* Instead, we can create a struct to store all the fields together as a single unit. For example,
+
+```rust
+struct Person{
+    name: String,
+    age: u8,
+    height u8
+}
+```
+### Defining a Struct in Rust
+
+* In Rust, we can use `struct` keyword to define a structure. The syntax of a structure is:
+```rust
+struct struct_name {
+    field1: datatype,
+    field2: datatype,
+    field3: datatype
+}
+```
+* **NOTE :** Here we are separating fields with `,` instead of semicolon.
+* **NOTE :** We can define struct outside or inside `main()` function.
+
+### Instantiating Rust Struct 
+
+```rust
+// Define a structure 
+struct Person {
+    name: String,
+    age: u8,
+    height: u8
+}
+
+fn main(){
+    // Creating an instance of Person struct
+    let person1 = Person{
+        name: String::from("Prince"),
+        age: 23,
+        height: 190
+    };
+```
+
+* Here, `Person {...}` creates an instance of the Person struct, and we have assigned it to the `person1` variable.
+* Inside that variable we are assigning the values..
+
+
+* **NOTE :** The struct definition is template, and the struct instance fill in that template with data.
+
+### Accessing Fields of a Struct 
+
+* We can use the struct instances along with the dot `.` notation to access values of fields in a structure. For example,
+
+```rust
+// Defining a Person struct
+struct Person {
+    name: String,
+    age: u8,
+    height: u8
+}
+
+fn main(){
+    // instantiate person struct
+    let person1 = Person{
+        name: String::from("Prince"),
+        age: 23,
+        height: 190
+    };
+
+    // accessing the values of person1 struct
+    println!("Person name = {}", person1.name);
+    println!("Person age = {}", person1.age);
+    println!("Person height = {}", person1.height);
+}
+```
+* Or defining struct inside `main()` : 
+
+```rust
+fn main(){
+    // Defining a Person struct
+    struct Person {
+        name: String,
+        age: u8,
+        height: u8
+    }
+
+    // instantiate Person struct : 
+    let person1 = Person{
+        name: String::from("Prince"),
+        age: 23,
+        height: 190
+    };
+
+    // accessing the values of person1 struct
+    println!("Person name = {}", person1.name);
+    println!("Person age = {}", person1.age);
+    println!("Person height = {}", person1.height);
+}
+```
+
+* Output will be same for these two different codes : 
+
+```plain
+Person name = Prince
+Person age = 23
+Person height = 190
+```
+
+### Destructuring Fields of a Rust Struct
+
+* Destructuring is the process of breaking down field of a data type(array, tuple, etc.) into smaller variables. We can break down the struct into smaller variables in Rust.
+* Suppose we have a struct and a struct instance,
+
+```rust
+struct Person {
+    name: String,
+    age: u8,
+    height: u8
+}
+
+let person1 = Person{
+    name: String::from("Prince"),
+    age: 23,
+    height: 190
+};
+```
+
+* We can now perform destructuring using: 
+
+```rust
+let Person {name, age, height} = person1;
+```
+* We can destructuring using `let` keyword, where left side of `=` is struct, and right side is instance of struct.
+* Now, we can access the `name`, `age`, and `height` field using the field names directly:
+  * `name` instead of `person1.name`
+  * `age` instead of `person1.age`
+  * `height` instead of `person1.height`
+
+* **Note :** The name of variable while destructuring should be the same as the name of the fields. 
+
+#### Example : Destructuring Fields of Struct
+
+```rust
+fn main(){
+    // Defining a Person struct
+    struct Person {
+        name: String,
+        age: u8,
+        height: u8
+    }
+
+    // instantiate Person struct : 
+    let person1 = Person{
+        name: String::from("Prince"),
+        age: 23,
+        height: 190
+    };
+
+    // destructure person struct into name, age, and height variables
+    let Person {name, age, height} = person1;
+
+    // accessing the values of person1 struct
+    println!("Person name = {}", name);
+    println!("Person age = {}", age);
+    println!("Person height = {}", height);
+}
+```
+
+* Output : 
+
+```plain
+Person name = Prince
+Person age = 23
+Person height = 190
+```
+
+* The pattern on the left has declarations, and the right side of the expression has a struct instance.
+
+
+
+
+
+
+
+
+## Rust Function : 
+
+
+
+

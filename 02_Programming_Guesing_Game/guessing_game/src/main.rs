@@ -1,11 +1,23 @@
 fn main(){
+    // Defining a Person struct
+    struct Person {
+        name: String,
+        age: u8,
+        height: u8
+    }
 
-    let tuple_name = ("Ramesh jonas", 38, 172);
+    // instantiate Person struct : 
+    let person1 = Person{
+        name: String::from("Prince"),
+        age: 23,
+        height: 190
+    };
 
-    // Destructing a Tuple
-    let (name, age, height) = tuple_name;
+    // destructure person struct into name, age, and height variables
+    let Person {name, age, height} = person1;
 
-    println!("name = {name}");
-    println!("age = {age}");
-    println!("height = {height}");
+    // accessing the values of person1 struct
+    println!("Person name = {}", name);
+    println!("Person age = {}", age);
+    println!("Person height = {}", height);
 }
