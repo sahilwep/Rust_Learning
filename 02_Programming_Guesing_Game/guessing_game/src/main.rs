@@ -1,17 +1,18 @@
 fn main(){
     
-    let random = 100;
+    let mut age = 100;
 
     {
-        println!("random variable before shadowing in inner block = {}", random);
+        // shadowing by age variable
+        let age = age;
 
-        // this deceleration shadows the outer random variable
-        let random = "abc";
-        
-        println!("random after shadowing in inner block = {}", random);
-        
+        println!("age variable inner block = {}", age);
+        // age goes out of scope
     }
     // end of the inner block
 
-    println!("random after shadowing in outer block = {}", random);
+    // age variable is not frozen in outer block
+    age = 3;
+
+    println!("age variable outer block = {}", age);
 }

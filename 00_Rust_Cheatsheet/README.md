@@ -1658,3 +1658,96 @@ random after shadowing in outer block = 100
 
 ### Variable Freezing in Rust 
 
+* We can freeze a variable in Rust by using shadowing and immutability. Once a variable is frozen, we cannot change the variable value in the inner scope. Example,
+
+```rust
+fn main(){
+    
+    let mut age = 100;
+
+    {
+        // shadowing by age variable
+        let age = age;
+
+        age = 2;
+
+        println!("age variable inner block = {}", age);
+    }
+    // end of the inner block
+
+    // age variable is not frozen in outer block
+    age = 3;
+
+    println!("age variable outer block = {}", age);
+}
+```
+
+* Output as an error : 
+
+```plain 
+error[E0384]: cannot assign twice to immutable variable `age`
+ --> src/main.rs:9:9
+  |
+7 |         let age = age;
+  |             ---
+  |             |
+  |             first assignment to `age`
+  |             help: consider making this binding mutable: `mut age`
+8 |
+9 |         age = 2;
+  |         ^^^^^^^ cannot assign twice to immutable variable
+```
+
+* In  the above example, we have assigned the mutable variable of the outer block named age to the same immutable variable in the inner scope.
+
+```rust
+fn main(){
+    let mut age = 100;
+    {
+        let age = age;
+        ...
+    }
+    ...
+}
+```
+
+* In this above example, if we are shadowing the `mutable variable` with an `immutable variable`, and when we try to change the value of that variable within the scope, our variable get's frozen.
+
+* Fixed code of above example :
+
+```rust
+fn main(){
+    
+    let mut age = 100;
+
+    {
+        // shadowing by age variable
+        let age = age;
+
+        println!("age variable inner block = {}", age);
+        // age goes out of scope
+    }
+    // end of the inner block
+
+    // age variable is not frozen in outer block
+    age = 3;
+
+    println!("age variable outer block = {}", age);
+}
+```
+* Output : 
+
+```plain
+age variable inner block = 100
+age variable outer block = 3
+```
+
+* **NOTE :**  When we are shadowing any outer scope mutable variable inside the inner scope as immutable variable, & if we are trying to change the value of inside scope variable, then it get's Freeze inside the inner scope, but in outside scope it can work as mutable(means we can change the value outside of the scope).
+
+
+
+
+
+## Rust Closure 
+
+
