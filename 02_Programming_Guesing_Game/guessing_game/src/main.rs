@@ -1,14 +1,14 @@
-
-// function to add two numbers in Rust
-fn add(a: i32, b: i32) -> i32 {
-    let sum = a + b;
-    return sum;
-}
-
 fn main(){
-    let a = 5;
-    let b = 10;
+    // scope of the outer code block
+    let outer_var = 32;
+
     
-    // function call inside println
-    println!("Sum of a and b = {}", add(a,b));
+    {
+        // scope of inner code block
+        let inner_var = 92;
+        println!("inner var = {}", inner_var);
+        println!("outer var = {}", outer_var);
+    }
+    // end of the inner code block
+    println!("outer var = {}", outer_var);
 }

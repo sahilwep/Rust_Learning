@@ -1554,5 +1554,73 @@ Sum of a and b = 15
 
 ## Rust Variable Scope : 
 
+* In Computer programming, a variable's scope defines the region in which the variable is available for use.
 
+```rust
+fn main(){
+    // this variable has scope inside the main function block
+    let age = 31;
+    ...
+}
+```
+* Here, the `age` variable has scope inside the body `{...}` of the `main()` function,
+* `NOTE :` Each variable in Rust has a scope that is valid inside a block. A block is a collection of statements enclosed by `{ }`.
+
+### Working of variable scope in Rust
+
+```rust
+fn main(){
+    // scope of outer_var variable is inside the main()
+    let outer_var = 100;
+
+    // start of inner code block
+    {
+        // scope of inner_var variable is only inside this new code block
+        let inner_var = 200;
+        println!("inner var = {}", inner_var);
+    }
+    // end of the inner code block
+
+    println!("inner var = {}", inner_var);
+    println!("outer var = {}", outer_var);
+
+}
+```
+
+* Here, if we try to print the `inner_var` outside of the inner code block, the program fails to compile, and we encounter an error.
+
+```plain
+  --> src/main.rs:15:32
+   |
+15 |     println!("inner var = {}", inner_var);
+   |                                ^^^^^^^^^ help: a local variable with a similar name exists: `outer_var`
+```
+* The rust compiler could not find `inner_var` in scope as we tried to print the variable outside the inner code block.
+* To fix this, we can do the following,
+
+```rust
+fn main(){
+    // scope of the outer code block
+    let outer_var = 32;
+
+    
+    {
+        // scope of inner code block
+        let inner_var = 92;
+        println!("inner var = {}", inner_var);
+        println!("outer var = {}", outer_var);
+    }
+    // end of the inner code block
+    println!("outer var = {}", outer_var);
+}
+```
+* Output : 
+
+```plain
+inner var = 92
+outer var = 32
+outer var = 32
+```
+
+### Variable Shadowing in Rust
 
