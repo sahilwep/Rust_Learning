@@ -1624,3 +1624,37 @@ outer var = 32
 
 ### Variable Shadowing in Rust
 
+
+* In Rust, when a variable declared within a particular scope has same name as a variable declared in outer scope, it is known as **variable shadowing**.
+* We can use same variable name in different scope block in the same program. Example,
+
+```rust
+fn main(){
+    
+    let random = 100;
+
+    {
+        println!("random variable before shadowing in inner block = {}", random);
+
+        // this deceleration shadows the outer random variable
+        let random = "abc";
+        
+        println!("random after shadowing in inner block = {}", random);
+        
+    }
+    // end of the inner block
+
+    println!("random after shadowing in outer block = {}", random);
+}
+```
+* Output : 
+
+```plain
+random variable before shadowing in inner block = 100
+random after shadowing in inner block = abc
+random after shadowing in outer block = 100
+```
+* The `random` variable inside the inner block will shadow the value of the outer block so that the inner block will have the `"abc"` value. However, the value of the `random` variable remains the same outside of the inner block.
+
+### Variable Freezing in Rust 
+

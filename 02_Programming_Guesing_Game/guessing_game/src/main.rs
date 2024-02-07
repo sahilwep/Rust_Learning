@@ -1,14 +1,17 @@
 fn main(){
-    // scope of the outer code block
-    let outer_var = 32;
-
     
+    let random = 100;
+
     {
-        // scope of inner code block
-        let inner_var = 92;
-        println!("inner var = {}", inner_var);
-        println!("outer var = {}", outer_var);
+        println!("random variable before shadowing in inner block = {}", random);
+
+        // this deceleration shadows the outer random variable
+        let random = "abc";
+        
+        println!("random after shadowing in inner block = {}", random);
+        
     }
-    // end of the inner code block
-    println!("outer var = {}", outer_var);
+    // end of the inner block
+
+    println!("random after shadowing in outer block = {}", random);
 }
