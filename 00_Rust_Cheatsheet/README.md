@@ -1750,4 +1750,211 @@ age variable outer block = 3
 
 ## Rust Closure 
 
+* In Rust, closures are `function without names`. They ar also known as `anonymous function` or `lambdas`.
 
+### Defining a Closure in Rust
+
+* We can define closure with help of `||` i.e start of closure, & after we can specify our statements.
+ 
+
+```rust
+fn main(){
+
+    // defining a closure to print a text
+    let plain_text = || println!("defining closure");
+
+    // call the closure
+    plain_text();
+}
+```
+* Once a closure is defined, we need to call it just like calling a function. To call a closure, we use the variable name to which the closure is assigned.
+
+### Rust Closure with Parameters 
+
+* In Rust, we can also pass parameters to a closure. For example,
+
+```rust
+// defining closure to add 1 to an integer
+let add_one = |x: i32| x + 1;
+```
+* Here, Inside the `|...|`, we have defined our parameters, and after we will define our statements.
+* `Note :` if we create closure with parameters, we need to also pass the value while calling the closure.
+
+```rust
+// call the closure with value 2
+add_one(2);
+```
+* **Example : Rust closure with parameter**
+
+```rust
+fn main(){
+
+    // define a closure add store it in a variable
+    let add_one = |x: i32| x + 1;
+
+    // call closure and store the result in a variable
+    let res = add_one(2);
+
+    println!("Result = {}", res);
+}
+```
+## Multi-line Closure in Rust : 
+
+* If our closure have multiple line statement, then we can use curly brackets `{...};` to specify our multi line statements.
+
+```rust
+#[allow(non_camel_case_types)]
+
+fn main(){
+
+    // define a closure add store it in a variable
+    let reverse_of_Num = |x: i32| {
+    let mut temp = x;
+    let mut res = 0;
+        while temp > 0 {
+            let ld = temp % 10;
+            res = res*10 + ld;
+            temp = temp / 10;
+        }
+        println!("Rev is = {}", res);
+    };
+    // Calling 
+    reverse_of_Num(123);
+}
+```
+* Output : 
+```plain
+Rev is = 321
+```
+
+
+
+### Rust Closure with return type :
+
+* During Definition of closure we can use return type to get the value from closure. Example,
+
+```rust
+fn main(){
+
+    // define a closure add store it in a variable
+    let add_one = |x: i32, y: i32| -> i32 {
+        let res = x + y;
+        println!("Adding these numbers!");
+        res
+    };
+
+    // call closure and store the result in a variable
+    let res = add_one(2, 3);
+
+    println!("Result = {}", res);
+}
+```
+
+* **NOTE :** In Rust, The last expression in the block of code implicitly become return value of that block, So we don't need to use the `return` keyword explicitly. Additionally when there is no semicolon at end of an expression it is treated as a return value.
+
+* Example : Code with no return value & have multiple statement.
+
+```rust
+fn main(){
+    // define a closure add store it in a variable
+    let sum = |x: i32, y: i32| {
+        let res = x + y;
+        println!("Adding these numbers! {}",res);   // like it's not returning anything, so we use semicolon at end.
+    };
+
+    // calling closure
+    sum(2, 3);
+}
+```
+
+* Example : Code with return value & have multiple statements.
+
+```rust
+fn main(){
+
+    // define a closure add store it in a variable
+    let sum = |x: i32, y: i32| -> i32{
+        let res = x + y; 
+        println!("execution flow inside the closure! ");
+        res // return res, this is why we didn't specify the semicolon at end.
+    };
+
+    // call closure and store the result in a variable
+    let res = sum(2, 3);
+
+    println!("Result = {}", res);
+}
+```
+* **NOTE :** We can also explicitly use `return` keyword in closure statements. example,
+
+```rust
+fn main(){
+
+    // define a closure add store it in a variable
+    let reverse_of_num = |x: i32| -> i32 {
+    let mut temp = x;
+    let mut res = 0;
+        while temp > 0 {
+            let ld = temp % 10;
+            res = res*10 + ld;
+            temp = temp / 10;
+        };
+        return res; // using return keyword & semicolon. or if we don't use semicolon it will work fine.
+    };
+    // Calling 
+    println!("Rev is = {}", reverse_of_num(123));
+}
+```
+* This will generate output : `Rev is = 321`
+
+### Closure Environment Capturing in Rust
+
+* Closure has a unique feature that allows it to allows it to capture the environment. This means the closure can use the values in its scope. For example,
+
+```rust
+fn main(){
+    let num = 100;
+
+    // Closure that capture the num variable
+    let print_num = || println!("Number = {}", num);
+
+    // closure calling 
+    print_num();
+}
+```
+
+* Here, the closure bound to `print_num` uses the variable `num` which was not defined in it. This is known as closure environment capturing.
+  
+
+### Closure Environment Capturing Modes in Rust 
+
+* Environment capturing closure can be of 3 different modes based on the variable and the closure definition.
+
+1. Variable is not modified inside closure
+2. Variable is modified inside closure
+3. variable is moved inside closure
+
+#### 1. Variable is not modified inside closure :
+
+
+
+#### 2. Variable is modified inside closure :
+
+
+
+#### 3. Variable is moved inside closure :
+
+
+
+
+### Why to use Closure : 
+
+* `Conciseness`: Closures can often provide more concise syntax compared to defining a separate named function.
+
+* `Flexibility`: Closures can capture variables from their surrounding scope, making them very flexible for use in various contexts.
+
+* `Readability`: In some cases, using a closure inline can improve code readability by keeping related functionality close together.
+
+* `Callbacks and iterators`: Closures are commonly used in Rust for tasks like callbacks, iterators, and event handling, where passing behavior as an argument is necessary.
+
+* In summary, while functions are more suitable for reusable and well-defined pieces of code, closures offer flexibility, conciseness, and the ability to capture variables from their enclosing scope, making them useful for certain types of tasks, especially when writing more functional-style code.

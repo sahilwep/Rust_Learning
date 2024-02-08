@@ -1,18 +1,25 @@
-fn main(){
-    
-    let mut age = 100;
+fn main() {
+    let x = 42;
 
-    {
-        // shadowing by age variable
-        let age = age;
+    // FnOnce - consumes x
+    let closure_once = move || {
+        println!("x: {}", x);
+    };
 
-        println!("age variable inner block = {}", age);
-        // age goes out of scope
-    }
-    // end of the inner block
+    // FnMut - borrows x mutably
+    let mut y = 10;
+    let mut closure_mut = || {
+        y += 1;
+        println!("y: {}", y);
+    };
 
-    // age variable is not frozen in outer block
-    age = 3;
+    // Fn - borrows x immutably
+    let closure_imm = || {
+        println!("x: {}", x);
+    };
 
-    println!("age variable outer block = {}", age);
+    // Calling closures
+    closure_once(); // This moves x into the closure, can't use x anymore
+    closure_mut();  // This borrows y mutably
+    closure_imm();  // This borrows x immutably
 }
