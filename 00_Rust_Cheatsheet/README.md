@@ -1832,6 +1832,7 @@ Rev is = 321
 ### Rust Closure with return type :
 
 * During Definition of closure we can use return type to get the value from closure. Example,
+* 
 
 ```rust
 fn main(){
@@ -2040,6 +2041,39 @@ fn main() {
 * Here, we have used `move` keyword to move our variable `word`, & if we use this variable after the closure we can't access it.
 
 * In Rust, the move keyword is used to convert any variables captured by reference or mutable reference to variables captured by value. It is used to transfer the ownership of a variable to the closure
+
+*** 
+* **CASE :** if we use this `move` closure, still we can access the value after that.
+
+```rust
+fn main() {
+    let x = 10; // Variable to capture
+
+    // Closure with `move` (owns `x`)
+    let closure_with_move = move || println!("x is: {}", x); // Can be called later, even after `x` is gone
+
+    closure_with_move();
+
+    println!("access value after closure with move = {}", x); 
+}
+```
+
+* `Solution :` this because the integer types implementation `Copy`
+if a type imples Copy then it can be copied around freely instead of being unavailable after a move.
+* If we try it with something that's not `Copy`, like a `String` or a `Vec<T>` instead, and you'll see it doesn't compile
+?eval
+
+```rust
+let x = vec![10, 20, 30];
+
+let closure_with_move = move || println!("x is {:?}", x);
+
+closure_with_move();
+
+println!("access value after move = {:?}", x); // error
+```
+
+*** 
 
 ##### Here's an example demonstrating each mode:
 

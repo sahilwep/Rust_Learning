@@ -1,14 +1,10 @@
 fn main() {
-    let word = String::from("Hello");
+    let x = 10; // Variable to capture
 
-    // Immutable closure with `move` keyword
-    let print_str = move || {
-        println!("word inside = {}", word);
-    };
+    // Closure with `move` (owns `x`)
+    let closure_with_move = move || println!("x is: {}", x); // Can be called later, even after `x` is gone
 
-    // Calling the closure
-    print_str();
+    closure_with_move();
 
-    // Attempting to use `word` outside of the closure will result in a compilation error
-    // println!("word outside = {}", word); // This line will cause a compilation error
+    println!("access value after closure with move = {}", x); 
 }
