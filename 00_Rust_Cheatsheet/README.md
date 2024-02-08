@@ -1926,35 +1926,157 @@ fn main(){
 * Here, the closure bound to `print_num` uses the variable `num` which was not defined in it. This is known as closure environment capturing.
   
 
-### Closure Environment Capturing Modes in Rust 
+#### Closure Environment Capturing Modes in Rust 
 
 * Environment capturing closure can be of 3 different modes based on the variable and the closure definition.
 
-1. Variable is not modified inside closure
-2. Variable is modified inside closure
-3. variable is moved inside closure
+1. Variable is not modified inside closure.
+2. Variable is modified inside closure.
+3. Variable is moved inside closure.
 
-#### 1. Variable is not modified inside closure :
+##### 1. Variable is not modified inside closure.
+
+```rust
+fn main(){
+    let word  = String::from("Hello");
+
+    // immutable closure
+    let print_str = || {
+        println!("word = {}", word);
+    };
+
+    // immutable borrow is possible outside the closure
+    println!("length of word = {}", word.len());
+
+    print_str();
+}
+```
+* Outside : 
+```plain
+length of word = 5
+word = Hello
+```
+
+* Here, the variable `word` is not modified inside the closure `print_str`. As the variable is immutable by default, we can make any number of immutable reference of `word` inside the closure. Notice that the closure variable `print_str` is also immutable.
+
+* **NOTE :** This mode of capture is also known as `Capture by Immutable Borrow`.
+
+##### 2. Variable is modified inside closure.
+
+```rust
+fn main(){
+    let mut word  = String::from("Hello");
+
+    // immutable closure
+    let mut print_str = || {
+        word.push_str(" World!");   // changing the value of word variable.
+        println!("word inside = {}", word);
+    };
+
+    // calling closure
+    print_str();
+    
+    // outside the word variable value is also changed!
+    println!("word outside = {}", word );
+}
+```
+* Output : 
+
+```plain
+word inside = Hello World!
+word outside = Hello World!
+```
+
+* Here, the variable `word` is modified inside the closure `print_str` with `word.push("World!")`. Thus, we have to make the variable `word` mutable as well the closure variable `print_str`. This means no other references of the `word` variable can exist unless the closure is used.
+
+* This mode of capture is also known as **Capture by Mutable Borrow**.
+
+##### 3. Variable is moved inside closure
+
+```rust
+fn main(){
+    let word  = String::from("Hello");
+
+    // immutable closure
+    let print_str = || {
+        // variable is moved to a new variable.
+        let new_word = word;
+        println!("word inside = {}", new_word);
+    };
+
+    // calling closure
+    print_str();
+    
+    // cannot immutable borrow because word variable has moved inside closure
+    // println!("word outside = {}", word );
+}
+```
+* Output : 
+```plain
+word inside = Hello
+```
+* Here, we have moved the variable `word` to a new variable `new_word` inside the closure. As the variable is moved, we cannot use it anywhere else except for inside the closure.
+
+* This mode of capture is also known as **Capture by Move**.
+
+* we can also move our variable inside the closure by using `move` keyword. example,
+
+```rust
+fn main() {
+    let word = String::from("Hello");
+
+    // Immutable closure with `move` keyword
+    let print_str = move || {
+        println!("word inside = {}", word);
+    };
+
+    // Calling the closure
+    print_str();
+
+    // Attempting to use `word` outside of the closure will result in a compilation error
+    // println!("word outside = {}", word); // This line will cause a compilation error
+}
+```
+* Here, we have used `move` keyword to move our variable `word`, & if we use this variable after the closure we can't access it.
+
+* In Rust, the move keyword is used to convert any variables captured by reference or mutable reference to variables captured by value. It is used to transfer the ownership of a variable to the closure
+
+##### Here's an example demonstrating each mode:
+
+```rust
+fn main() {
+    let x = 42;
+    
+    // closure - moved
+    let closure_once = move || {
+        println!("x: {}", x);
+    };
+
+    // closure - modified
+    let mut y = 10;
+    let mut closure_mut = || {
+        y += 1;
+        println!("y: {}", y);
+    };
+
+    // closure - not_modified
+    let closure_imm = || {
+        println!("x: {}", x);
+    };
+
+    // Calling closures
+    closure_once(); // This moves x into the closure, can't use x anymore
+    closure_mut();  // This borrows y mutably
+    closure_imm();  // This borrows x immutably
+}
+```
 
 
 
-#### 2. Variable is modified inside closure :
-
-
-
-#### 3. Variable is moved inside closure :
 
 
 
 
-### Why to use Closure : 
+## Rust Stack and Heap : 
 
-* `Conciseness`: Closures can often provide more concise syntax compared to defining a separate named function.
 
-* `Flexibility`: Closures can capture variables from their surrounding scope, making them very flexible for use in various contexts.
-
-* `Readability`: In some cases, using a closure inline can improve code readability by keeping related functionality close together.
-
-* `Callbacks and iterators`: Closures are commonly used in Rust for tasks like callbacks, iterators, and event handling, where passing behavior as an argument is necessary.
-
-* In summary, while functions are more suitable for reusable and well-defined pieces of code, closures offer flexibility, conciseness, and the ability to capture variables from their enclosing scope, making them useful for certain types of tasks, especially when writing more functional-style code.

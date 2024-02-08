@@ -1,25 +1,14 @@
 fn main() {
-    let x = 42;
+    let word = String::from("Hello");
 
-    // FnOnce - consumes x
-    let closure_once = move || {
-        println!("x: {}", x);
+    // Immutable closure with `move` keyword
+    let print_str = move || {
+        println!("word inside = {}", word);
     };
 
-    // FnMut - borrows x mutably
-    let mut y = 10;
-    let mut closure_mut = || {
-        y += 1;
-        println!("y: {}", y);
-    };
+    // Calling the closure
+    print_str();
 
-    // Fn - borrows x immutably
-    let closure_imm = || {
-        println!("x: {}", x);
-    };
-
-    // Calling closures
-    closure_once(); // This moves x into the closure, can't use x anymore
-    closure_mut();  // This borrows y mutably
-    closure_imm();  // This borrows x immutably
+    // Attempting to use `word` outside of the closure will result in a compilation error
+    // println!("word outside = {}", word); // This line will cause a compilation error
 }
