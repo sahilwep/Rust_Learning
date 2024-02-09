@@ -1,10 +1,7 @@
-fn main() {
-    let x = 10; // Variable to capture
+fn main(){
+    let v = vec![1, 2, 3];
 
-    // Closure with `move` (owns `x`)
-    let closure_with_move = move || println!("x is: {}", x); // Can be called later, even after `x` is gone
-
-    closure_with_move();
-
-    println!("access value after closure with move = {}", x); 
+    println!("vector is : {:?}", v.get(0));
+    println!("vector is : {:?}", v.get(1));
+    println!("vector is : {:?}", v.get(2));
 }

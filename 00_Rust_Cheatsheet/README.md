@@ -2114,3 +2114,89 @@ fn main() {
 ## Rust Stack and Heap : 
 
 
+
+### The Stack 
+
+
+
+### The Heap 
+
+
+
+
+
+
+
+
+
+## Rust Vector :
+
+* Vector is dynamic (resizable) data structure that can store a list of element of the same type. Being a resizable data structure, vectors can grow and shrink at runtime.
+
+### Create a Vector in Rust
+
+* In Rust, we can create a vector using the `vec!` macro. For example,
+
+```rust
+let v = vec![1, 2, 3];
+```
+* Here, we are creating a vector using the `vec!` macro with some initial values.
+  * `let v` - the name of the variable
+  * `vec![1, 2, 3]` - initialize a vector with integer value **1, 2, 3**.
+
+* By looking at the type of the values provided to the macro, Rust will automatically set the vector type. For example, the vector type of the above vector is `Vec<i32>`.
+
+* We can also define the vector type overselves using the `vec!` macro
+```rust
+let v: Vec<u8> = vec![1, 2, 3];
+```
+* **Example:** Creating a vector in Rust
+
+```rust
+fn main(){
+    let v = vec![1, 2, 3];
+    let v1: Vec<u8> = vec![4, 5, 6];
+
+    println!("vector is : {:?}", v);
+    println!("vector is : {:?}", v1);
+}
+```
+* Output : 
+
+```plain
+vector is : [1, 2, 3]
+vector is : [4, 5, 6]
+```
+
+### Accessing Elements of a Vector 
+
+* We can access each element of a vector using `index` i.e start from `0`.
+
+```rust
+fn main(){
+    let v = vec![1, 2, 3];
+
+    println!("vector is : {}", v[0]);
+    println!("vector is : {}", v[1]);
+    println!("vector is : {}", v[2]);
+}
+```
+#### Accessing elements of a vector using the get() method
+
+* We can also access the element of the vector with the `get()` method and the index of the element.
+
+```rust
+fn main(){
+    let v = vec![1, 2, 3];
+
+    println!("vector is : {:?}", v.get(0));
+    println!("vector is : {:?}", v.get(1));
+    println!("vector is : {:?}", v.get(2));
+}
+```
+* As we can see, the output returns a value `Some(1), Some(2), Some(3)` of the `v<T>` Type.
+
+* The advantages of using `get()` method is over just using the vector index to access the element directly is that it will not error if the vector index is out of range.
+
+
+   
