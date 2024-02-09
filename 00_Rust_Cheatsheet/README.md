@@ -2113,13 +2113,11 @@ fn main() {
 
 ## Rust Stack and Heap : 
 
-
-
 ### The Stack 
 
-
-
 ### The Heap 
+
+
 
 
 
@@ -2198,5 +2196,67 @@ fn main(){
 
 * The advantages of using `get()` method is over just using the vector index to access the element directly is that it will not error if the vector index is out of range.
 
+### Adding value to a Vector 
 
+* We can add value to a vector by creating a `mutable` vector in rust.
+* We can use `push()` method to push values in vector.
+
+```rust
+fn main(){
+    // creating mutable vector, so that we can insert the value inside the vector.
+    let mut v: Vec<u32> = vec![29, 23, 7, 23];
+
+    // inserting value at the last to the vector
+    v.push(12);
+    v.push(92);
+
+    println!("vec = {:?}", v);
+}
+```
+* Output : 
+```plain
+vec = [29, 23, 7, 23, 12, 92]
+```
+* `NOTE :` here the values are inserted at the last of the vector.
+
+### Removing value from a vector : 
+
+* We can remove values from a vector by making mutable and with the `remove()` method. 
+* We need to pass the index inside the `remove()` method.
+
+```rust
+fn main(){
+    // creating of mutable vector 
+    let mut v: Vec<u32> = vec![29, 23, 7, 23];
+
+    v.push(12);
+    v.push(92);
+
+    println!("Original Vec = {:?}", v);
+    
+    // removing value from vector by passing index.
+    v.remove(2);
+
+    println!("Original Vec = {:?}", v);
+}
+```
+* Output : 
+
+```plain
+Original Vec = [29, 23, 7, 23, 12, 92]
+Original Vec = [29, 23, 23, 12, 92]
+```
+* Here, we have passed the index `2` which has value `7`, & it get removed.
+
+* Output : 
+
+```plain
+Original Vec = [29, 23, 7, 23, 12, 92]
+Original Vec = [29, 23, 23, 12, 92]
+```
    
+* `NOTE :` Removing an element will shift all other values in the vector by one **(-1 index)**.
+
+
+### Looping through a Vector in Rust 
+
