@@ -2347,11 +2347,100 @@ Value is : 14
 
 
 
-
-
-
 ## Rust String 
 
+* String in Rust is a sequence of  **Unicode characters encoded in UTF-8**.
+
+
+
+### Creation of String
+
+```rust
+fn main(){
+
+    // Creation of immutable string :
+    let s = "Sahil";
+    // another method :
+    let name = String::from("Prince");
+
+    println!("{}", s);
+    println!("{}", name);
+}
+```
+* Here we have created string using two method, we can directly pass the value inside the `"..."` double quotes, Cargo will determine it as string.
+* Or we can use `String::From("....")` method.
+* Strings are of immutable type.
+
+### Mutable String in Rust
+
+* We can use `mut` keyword before assigning a string to a variable.
+
+```rust
+fn main(){
+    // Creation of mutable string :
+    let mut name = String::from("Sahil");
+    println!("{}", name);
+
+    // after pushing value inside string
+    name.push_str(" Sharma");
+
+    println!("{}", name);}
+```
+
+### String Slicing in Rust
+
+* We can slice a string in Rust to reference a part of the string.
+
+```rust
+fn main(){
+    let word = String::from("Hello World!");
+
+    // slicing a string 
+    let slice = &word[0..5];
+
+    println!("string = {}", word);
+    println!("slice = {}", slice);
+}
+```
+* Here, `&word[0..5]` is a notation for slicing the string stored in variable `word` from start index **0** (inclusive) to end index **5** (exclusive).
+* The `&` (ampersand) in the slicing syntax signifies that it is a string reference. it is not actual data.
+
+### Iterating over String
+
+* We can use the `chars()` method of the string type to iterate over a string. For example,
+
+```rust
+fn main(){
+    let word = String::from("Hello");
+
+    // iterating through each character in string using chars() method
+    for char in word.chars() {
+        println!("{}", char);
+    }
+}
+```
+
+### Creating an Empty String with `String::new()`
+
+* We can create an empty string using the `String::new()` method. For example,
+
+```rust
+fn main(){
+    let mut word = String::new();
+
+    println!("Original String  = {}", word);
+    
+    // append a string to the word variable
+    word.push_str("Hello World!");
+
+    println!("Changed String  = {}", word);
+}
+```
+* Output : 
+```plain
+Original String  = 
+Changed String  = Hello World!
+```
 
 
 
@@ -2360,6 +2449,18 @@ Value is : 14
 
 
 
+
+
+
+
+## Rust HashMap : 
+
+* The Rust HashMap data structure allows us to store data in **key-value pairs**. Here are some of the features of hashmap:
+  * Each value is associated with a corresponding key.
+  * Keys are unique, whereas value can duplicate.
+  * Values can be accessed using their Corresponding keys.
+
+### Creating a HashMap in Rust 
 
 
 

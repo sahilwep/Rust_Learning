@@ -1,14 +1,10 @@
 fn main(){
+    let mut word = String::new();
 
-    let mut v: Vec<u8> = Vec::new();
+    println!("Original String  = {}", word);
+    
+    // append a string to the word variable
+    word.push_str("Hello World!");
 
-    v.push(10);
-    v.push(12);
-    v.push(13);
-    v.push(14);
-
-    for i in 0..4 {
-        println!("Value is : {}", v[i]);
-    }
-
+    println!("Changed String  = {}", word);
 }
