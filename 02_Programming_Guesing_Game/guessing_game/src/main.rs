@@ -1,14 +1,14 @@
 fn main(){
-    // creating of mutable vector 
-    let mut v: Vec<u32> = vec![29, 23, 7, 23];
 
+    let mut v: Vec<u8> = Vec::new();
+
+    v.push(10);
     v.push(12);
-    v.push(92);
+    v.push(13);
+    v.push(14);
 
-    println!("Original Vec = {:?}", v);
-    
-    // removing value from vector by passing index.
-    v.remove(2);
+    for i in 0..4 {
+        println!("Value is : {}", v[i]);
+    }
 
-    println!("Original Vec = {:?}", v);
 }

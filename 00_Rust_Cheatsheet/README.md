@@ -2152,8 +2152,11 @@ let v: Vec<u8> = vec![1, 2, 3];
 
 ```rust
 fn main(){
+    // Vector Deceleration without datatype
     let v = vec![1, 2, 3];
+    // Vector Deceleration with datatype
     let v1: Vec<u8> = vec![4, 5, 6];
+
 
     println!("vector is : {:?}", v);
     println!("vector is : {:?}", v1);
@@ -2172,8 +2175,10 @@ vector is : [4, 5, 6]
 
 ```rust
 fn main(){
+    // Vector Declaration
     let v = vec![1, 2, 3];
 
+    // accessing element of vector 
     println!("vector is : {}", v[0]);
     println!("vector is : {}", v[1]);
     println!("vector is : {}", v[2]);
@@ -2185,6 +2190,7 @@ fn main(){
 
 ```rust
 fn main(){
+    // Creation of vector
     let v = vec![1, 2, 3];
 
     println!("vector is : {:?}", v.get(0));
@@ -2229,6 +2235,7 @@ fn main(){
     // creating of mutable vector 
     let mut v: Vec<u32> = vec![29, 23, 7, 23];
 
+    // inserting value inside the vector
     v.push(12);
     v.push(92);
 
@@ -2259,4 +2266,102 @@ Original Vec = [29, 23, 23, 12, 92]
 
 
 ### Looping through a Vector in Rust 
+
+* We can use the `for..in` or `while` or `loop` to iterate through a vector. For example,
+
+```rust
+fn main(){
+    // creating of mutable vector 
+    let mut v: Vec<u32> = vec![29, 23, 7, 23];
+
+    // inserting value inside vector
+    v.push(12);
+    v.push(92);
+    v.push(83);
+    v.push(32);
+
+    // looping through a vector to print it's index and value : 
+    for index in 0..8 {
+        println!("Index = {}, Value = {}", index, v[index]);
+    }
+}
+```
+
+* Output :
+
+```plain
+Index = 0, Value = 29
+Index = 1, Value = 23
+Index = 2, Value = 7
+Index = 3, Value = 23
+Index = 4, Value = 12
+Index = 5, Value = 92
+Index = 6, Value = 83
+Index = 7, Value = 32
+```
+
+### Creating a Vector using `Vec::new()` Method 
+
+* `Vec::new()` : it creates new constructor of vector
+
+```rust
+let v: Vec<u8> = Vec::new();
+```
+* `Vec::new()` - initialize an empty vector with the `new()` method
+* Example : 
+```rust
+fn main(){
+    // Creating mutable vector by calling constructor of vector
+    let mut v: Vec<u8> = Vec::new();
+
+    // insertion of values inside the vector.s
+    v.push(10);
+    v.push(12);
+    v.push(13);
+    v.push(14);
+
+    for i in 0..4 {
+        println!("Value is : {}", v[i]);
+    }
+
+}
+```
+* Output : 
+
+```plain
+Value is : 10
+Value is : 12
+Value is : 13
+Value is : 14
+```
+
+* Resource : [Multiple Methods for Vector Creation](https://www.linkedin.com/pulse/vector-creation-iteration-rust-amit-nadiger/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Rust String 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
