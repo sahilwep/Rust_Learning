@@ -2462,6 +2462,205 @@ Changed String  = Hello World!
 
 ### Creating a HashMap in Rust 
 
+* HashMap is part of the Rust standard collections library, so we must include the `HashMap` module in our program to use it.
+* We can import the hashmap by using this deceleration.
+
+```rust
+use std:collections::HashMap;
+```
+
+* Now, we can create a hashmap using the `new()` method in the `HashMap` module. For example,
+
+```rust
+let mut info: HashMap<i32, String> = HashMap::new();
+```
+* `let mut info` - declare a mutable variable info.
+* `HashMap<i32, String>` - type of the HashMap where the key is a integer and value is a String.
+* `HashMap::new()` - creates a new HashMap
+
+* Example Creating a HashMap : 
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut info: HashMap<i32, String> = HashMap::new();
+
+    println!("HashMap = {:?}", info);
+}
+```
+### HashMap Operations 
+* The `HashMap` module provides various method to perform basic operations in a hashmap.
+  * Add Element
+  * Access Value
+  * Remove Element
+  * Change Element
+
+#### Add Element to a HashMap in Rust
+
+* We can use `insert()` to add an element(key-value pairs) to a hashmap.
+  
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
+
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
+
+    println!("Fruits = {:?}", fruits);
+}
+```
+
+* Output : 
+```plain
+Fruits = {1: "Apple", 2: "orange"}
+```
+
+#### Access Values in a HashMap in Rust
+
+* We can use `get()` to access a value from the given hashmap.
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
+
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
+
+    // access values in the hashmap
+    let first_fruit = fruits.get(&1);
+    let second_fruit = fruits.get(&2);
+    let third_fruit = fruits.get(&3);
+
+    println!("First Fruits = {:?}", first_fruit);
+    println!("Second Fruits = {:?}", second_fruit);
+    println!("Third Fruits = {:?}", third_fruit);
+}
+```
+* Output : 
+
+```plain
+First Fruits = Some("Apple")
+Second Fruits = Some("orange")
+Third Fruits = None
+```
+* Here, we have used `&` ampersand and the key(`&1`, `&2`) as an argument to the `get()` method.
+* The `third_fruit` return `None` value because `&3` doesn't match anything that's in the hashmap.
+
+#### Remove Element from a HashMap in Rust
+
+* We can remove elements from a hashmap by providing a key to the `remove()` method. For Example,
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
+
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
+
+    println!("First Fruits Before Removing = {:?}", fruits.get(&1));
+    
+    // removing value in a hashmap
+    fruits.remove(&1);
+    
+    println!("First Fruits After Removing = {:?}", fruits.get(&1));
+}
+```
+
+* Output : 
+
+```plain
+First Fruits Before Removing = Some("Apple")
+First Fruits After Removing = None
+```
+* Here, we have use `&` ampersand to remove the values from a HashMap.
+
+#### Changing Element of a HashMap in Rust 
+
+* We can change/update elements of a hashmap by using the `insert()` method. For example,
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
+
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
+
+    println!("First Fruits Before Updating = {:?}", fruits.get(&1));
+    
+    // Update value in a hashmap
+    fruits.insert(1, String::from("Strawberry"));
+    
+    println!("First Fruits After Updating = {:?}", fruits.get(&1));
+}
+```
+
+* Output : 
+```plain
+First Fruits Before Updating = Some("Apple")
+First Fruits After Updating = Some("Strawberry")
+```
+
+### Others Methods of Rust HashMap
+
+|Method | Description |
+|--------|------------|
+| `len()` | Returns the length of the HashMap. |
+| `contains_key()` | Checks if a value exists for the specified key. |
+| `iter()` | Returns an iterator over the entries of a HashMap. |
+| `values()` | Returns an iterator over the Keys of a HashMap. |
+| `Keys()` | Returns an iterator over the keys of a HashMap. |
+| `clone()` | Creates and return a copy of the HashMap. |
+
+* Example : 
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
+
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
+    
+    println!("Length of fruit hashmap {} ", fruits.len());
+}
+```
+* Output : 
+```plain
+Length of fruit hashmap 2 
+```
+
+
+
+
+
+
+
+## Rust HashSet :
+
+
+
 
 
 

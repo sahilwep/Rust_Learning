@@ -1,10 +1,12 @@
+use std::collections::HashMap;
+
 fn main(){
-    let mut word = String::new();
+    // create a new HashMap
+    let mut fruits: HashMap<i32, String> = HashMap::new();
 
-    println!("Original String  = {}", word);
+    // add key-value in a hashmap
+    fruits.insert(1, String::from("Apple"));
+    fruits.insert(2, String::from("orange"));
     
-    // append a string to the word variable
-    word.push_str("Hello World!");
-
-    println!("Changed String  = {}", word);
+    println!("Length of fruit hashmap {} ", fruits.len());
 }
