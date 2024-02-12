@@ -2659,9 +2659,289 @@ Length of fruit hashmap 2
 
 ## Rust HashSet :
 
+* HashSet implement the set data structure in Rust. Just like a set, it allows us to store values without duplicates.
+
+### Creating a HashSet in Rust
+
+* Before creating a `HashSet` we need to import it from rust standard collection library by :
+```rust
+use std::collections::HashSet;
+```
+
+* we can create a hashset by using `new()` method of the `HashSet` module.
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    // create a new hashset
+    let mut color: HashSet<String> = HashSet::new();
+
+    println!("hashSet = {:?}", color);
+}
+```
+
+* Here,
+  * `let mut color` - declares a mutable  variable **color**.
+  * `HashSet<String>` - type of the hashset where the value are of type **string**.
+  * `HashSet::new()` - creates a new hashset.
+
+### HashSet Operations in Rust 
+
+* The `HashSet` module provide various methods to perform basic operations in a hashset. 
+  * Add Values
+  * Check Values
+  * Remove Values
+  * Iterate over Values
+
+#### Add values to a HashSet in Rust : 
+* We can use `insert()` method to add an element to the hashset. For example,
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    let mut colors: HashSet<&str> = HashSet::new();
+
+    // insert elements to hashset
+    colors.insert("Red");
+    colors.insert("Yellow");
+
+    println!("Colors = {:?}", colors);
+}
+```
+* Output :  `plain Colors = {"Yellow", "Red"}`
+
+#### Check Value is Present in a HashSet in Rust : 
+
+* We can use `contains()` method to check if a value is present in a hashset. For example,
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    let mut colors: HashSet<&str> = HashSet::new();
+
+    // insert elements to hashset
+    colors.insert("Red");
+    colors.insert("Yellow");
+
+    // check for a value in HashSet
+    if colors.contains("Red") {
+        println!("Yes ");
+    }
+}
+```
+* Output : `Yes`
+
+#### Remove Values from a HashSet in Rust
+
+* We can use `remove()` method to remove the specific element from the hashset. For example,
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    let mut colors: HashSet<&str> = HashSet::new();
+
+    // insert elements to hashset
+    colors.insert("Red");
+    colors.insert("Yellow");
+
+    println!("Colors before removing : {:?}",colors);
+    
+    // Remove value from a HashSet
+    colors.remove("Yellow");
+    
+    println!("Colors after removing : {:?}",colors);
+}
+```
+* Output : 
+```plain
+Colors before removing : {"Yellow", "Red"}
+Colors after removing : {"Red"}
+```
+
+#### Iterate over Values of a HashSet in Rust :
+
+* We can use **Rust For loop** to iterate over values of a hashset. For example,
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    let mut colors: HashSet<&str> = HashSet::new();
+
+    // insert elements to hashset
+    colors.insert("Red");
+    colors.insert("Yellow");
+    colors.insert("Green");
+    colors.insert("Black");
+    colors.insert("Pink");
+
+    // iterate over a hashset
+    for i in colors {
+        // print each value in the hashset
+        println!("{}", i);
+    }
+}
+```
+* Output :
+
+```plain
+Yellow
+Red
+Green
+Pink
+Black
+```
+
+### HashSet with Default Values in Rust : 
+
+* We can use `from()` method when creating it. For example,
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+    // creating hashset with default values : 
+    let numbers = HashSet::from([2, 7, 9, 10]);
+
+    println!("numbers = {:?}", numbers);
+}
+```
+* Output : 
+```plain
+numbers = {2, 7, 10, 9}
+```
+
+### Other Methods of Rust HashSet 
+
+| Method | Description |
+|--------|-------------|
+| `len()` | returns the length of a hashset |
+| `is_empty()` | checks if the hashset is empty |
+| `clear()` | removes all elements from the hashset |
+| `drain()` | returns all the elements aas an iterator and clears the hashset |
+
+
+### Set Operations 
+
+#### Union of two Set :
+
+* We can use `union()` method to find the union of two sets. For example,
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+   let hashset1 = HashSet::from([2, 7, 8]);
+   let hashset2 = HashSet::from([1, 2, 7]);
+
+   // Union of HashSets
+   let result: HashSet<_> = hashset1.union(&hashset2).collect();
+
+   println!("hashset1 = {:?}", hashset1);
+   println!("hashset2 = {:?}", hashset2);
+   println!("Union = {:?}", result);
+}
+```
+* Output : 
+```plain
+hashset1 = {2, 7, 8}
+hashset2 = {1, 2, 7}
+Union = {2, 7, 1, 8}
+```
+
+* Here, `union()` method return an iterator, so we have used the `collect()` method to get the actual result.
+
+* **NOTE :** We have passed `&hashset2` as an argument to the `union()` method because it takes a reference as an argument.
+
+### Intersection of two sets : 
+
+* We can use the `intersection()` method to find the intersection b/w two sets. For example : 
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+   let hashset1 = HashSet::from([2, 7, 8]);
+   let hashset2 = HashSet::from([1, 2, 7]);
+
+   // Intersection of HashSets
+   let result: HashSet<_> = hashset1.intersection(&hashset2).collect();
+
+   println!("hashset1 = {:?}", hashset1);
+   println!("hashset2 = {:?}", hashset2);
+   println!("Intersection = {:?}", result);
+}
+```
+
+* Output :
+
+```plain
+hashset1 = {7, 2, 8}
+hashset2 = {1, 7, 2}
+Intersection = {2, 7}
+```
+
+### Difference between two Sets : 
+* We can use `difference()` method to find the difference between two sets. For example,
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+   let hashset1 = HashSet::from([2, 7, 8]);
+   let hashset2 = HashSet::from([1, 2, 7]);
+
+   // Difference of HashSets
+   let result: HashSet<_> = hashset1.difference(&hashset2).collect();
+
+   println!("hashset1 = {:?}", hashset1);
+   println!("hashset2 = {:?}", hashset2);
+   println!("Difference = {:?}", result);
+}
+```
+* Output : 
+```plain
+hashset1 = {7, 2, 8}
+hashset2 = {2, 1, 7}
+Difference = {8}
+```
+
+### Symmetric Difference between two Sets : 
+
+* We can use the `symmetric_difference()` method to find the symmetric difference between two sets. For example
+
+```rust
+use std::collections::HashSet;
+
+fn main(){
+   let hashset1 = HashSet::from([2, 7, 8]);
+   let hashset2 = HashSet::from([1, 2, 7, 9]);
+
+   // Symmetric Difference of HashSets
+   let result: HashSet<_> = hashset1.difference(&hashset2).collect();
+
+   println!("hashset1 = {:?}", hashset1);
+   println!("hashset2 = {:?}", hashset2);
+   println!("Symmetric Difference = {:?}", result);
+}
+```
+
+* Output : 
+
+```plain
+hashset1 = {2, 8, 7}
+hashset2 = {1, 7, 2, 9}
+Symmetric Difference = {8}
+```
 
 
 
 
+
+
+
+## Rust Iterator :
 
 

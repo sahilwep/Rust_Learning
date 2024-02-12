@@ -1,12 +1,13 @@
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 fn main(){
-    // create a new HashMap
-    let mut fruits: HashMap<i32, String> = HashMap::new();
+   let hashset1 = HashSet::from([2, 7, 8]);
+   let hashset2 = HashSet::from([1, 2, 7, 9]);
 
-    // add key-value in a hashmap
-    fruits.insert(1, String::from("Apple"));
-    fruits.insert(2, String::from("orange"));
-    
-    println!("Length of fruit hashmap {} ", fruits.len());
+   // Intersection of HashSets
+   let result: HashSet<_> = hashset1.difference(&hashset2).collect();
+
+   println!("hashset1 = {:?}", hashset1);
+   println!("hashset2 = {:?}", hashset2);
+   println!("Symmetric Difference = {:?}", result);
 }
