@@ -2944,4 +2944,274 @@ Symmetric Difference = {8}
 
 ## Rust Iterator :
 
+* An Iterator in rust is responsible for creating a sequence of value and allows us to iterate over each item of the sequences. It is primarily used for looping and we can only loop over iterator in Rust.
+  
+* We can use `iter()` method to create an iterator.
+* Let's look at a simple example on how we can loop through an array.
+ 
+```rust
+fn main(){
+    let numbers = [2, 1, 17, 99, 56];
+
+   // iterator 
+   let numbers_iterator = numbers.iter();
+
+   for number in numbers_iterator {
+       println!("{}", number);
+   }
+}
+```
+
+* Output : 
+
+```plain
+2
+1
+17
+99
+56
+```
+
+*  **NOTE :** Collection like array, vector, hashmap, and hashset are not iterable by default. We can use `iter()` method to tell Rust that it can be used to loop over the values.
+
+### next() Method of an Iterator in Rust :
+
+* Another important method of iterator is the `next()` method. The `next()` method of an iterator can be used to traverse through the value in the iterator.
+* Every iterator in Rust by definition will have the `next()` method. The `next()` method is used to fetch individual value from the iterator. For example,
+
+```rust
+fn main(){
+   let colors = vec!["Red", "Yellow", "Green" ];
+
+   // iterator 
+   let mut colors_iterator = colors.iter();
+   println!("colors iterator = {:?}", colors_iterator);
+
+   // fetch values from iterator one by one using next() method 
+   println!("{:?}", colors_iterator.next());
+   println!("{:?}", colors_iterator.next());
+   println!("{:?}", colors_iterator.next());
+   println!("{:?}", colors_iterator.next());
+}
+```
+
+* Output : 
+```plain
+colors iterator = Iter(["Red", "Yellow", "Green"])
+Some("Red")
+Some("Yellow")
+Some("Green")
+None
+```
+
+* Here we fetch values from the iterator in `colors_iterator` using the `next()` method. The `next()` method either return `Some` value or `None`.
+* Notice that we need to make the `colors_iterator` a mutable variable because calling `next()` will change the internal state of the iterator reaches the end of the sequence.
+
+### Ways to Create iterator in Rust : 
+
+* We can create iterator by converting a collection into an iterator. There are three ways to create an iterator.
+  1. Using `iter()` method
+  2. Using `into_iter()` method
+  3. Using `iter_mut()` method.
+  
+
+#### 1. Using `iter()` method
+
+* Using the `iter()` method on a collection will borrow(reference) each element of the collection in each iteration. Thus, the collection will be available for use after we have looped through it. For example,
+
+```rust
+fn main(){
+   let colors = vec!["Red", "Green", "Blue"];
+
+   // using the iter() to iterate through a collection
+   for color in colors.iter() {
+      // reference to the items in the iterator 
+      println!("{}", color);
+   }
+
+   // the collection is untouched and still available here 
+   println!("colors = {:?}", colors);
+}
+```
+* Output : 
+```plain
+Red
+Green
+Blue
+colors = ["Red", "Green", "Blue"]
+```
+* Notice here that the `colors` variable still available after `iter()` method is used on it.
+
+#### 2. Using `into_iter()` method
+
+* Using the `into_iter()` method on a collection will iterate on the same element of the collection in each iteration. Thus, the collection will no longer be available for reuse as the value moves within the loop.
+
+```rust
+fn main(){
+   let colors = vec!["Red", "Green", "Blue"];
+
+   // using the iter() to iterate through a collection
+   for color in colors.into_iter() {
+      // reference to the items in the iterator 
+      println!("{}", color);
+   }
+
+   // error 
+   // the collection is not available here as the loop scope ends above 
+   println!("colors = {:?}", colors);
+}
+```
+* Output : 
+
+```plain
+error[E0382]: borrow of moved value: `colors`
+   --> src/main.rs:12:30
+    |
+2   |    let colors = vec!["Red", "Green", "Blue"];
+    |        ------ move occurs because `colors` has type `Vec<&str>`, which does not implement the `Copy` trait
+...
+5   |    for color in colors.into_iter() {
+    |                        ----------- `colors` moved due to this method call
+...
+12  |    println!("colors = {:?}", colors);
+    |                              ^^^^^^ value borrowed here after move
+    |
+```
+
+* Notice here that the `colors` variable is unavailable because the `into_iter()` method moves the actual data into the `for` loop and is not available outside of it's scope.
+
+
+***
+* **Note :** By default the for loop will apply the `into_iter()` function to the collection. We don't have to use the `into_iter()` function to convert the collection to an iterator when using the for loop.
+* For example, these two ways to loop through an iterator are the same 
+```rust
+for color in colors.into_iter() {
+    // code
+}
+for color in colors {
+    // code 
+}
+```
+* Example : 
+```rust
+fn main(){
+   let colors = vec!["Red", "Green", "Blue"];
+
+   for color in colors {
+      println!("{}", color);
+   }
+
+   // error 
+   // the collection is not available here as the loop scope ends above 
+   println!("colors = {:?}", colors);
+}
+```
+***
+
+#### 3. Using `iter_mut()` method.
+
+* Using the `iter_mut()` method on a collection will mutably borrow each element of the collection in each iteration. It means we can modify the collection in place. For example,
+
+```rust
+fn main(){
+   let mut colors = vec!["Red", "Greed", "Yellow"];
+
+   println!("Original value of colors = {:?}", colors);
+
+   // using iter_mut() to iterate through a collection
+   for color in colors.iter_mut(){
+      // modify the item in the collection 
+      *color = "Black";
+      println!("{}", color);
+   }
+
+   // the modified collection is available here 
+   println!("Modified value of colors = {:?}", colors);
+}
+```
+* Output : 
+```plain
+
+Original value of colors = ["Red", "Greed", "Yellow"]
+Black
+Black
+Black
+Modified value of colors = ["Black", "Black", "Black"]
+```
+
+* Notice here that we use `iter_mut()` method to change the original item in the collection with `*color = "Black"`. Thus, every item in the collection after for loop is modified.
+  
+### Iterator Adapters in Rust 
+
+* Iterator adapter are used to transform it into another kind of iterator by altering its behavior. let's take a look at the `map()` adapter.
+
+```rust
+let numbers = vec![1, 2, 3];
+
+numbers.iter().map(|i| i + 1);
+```
+
+* Here, the `map()` method takes a closure to call on each item on the vector numbers.
+* however, we will have to use the `collect()` method on the `map()` adapter to collect the result. This is because iterator adapter do not produce the result directly(lazy) without calling the `collect()` method.
+
+```rust
+numbers.iter().map(|i| i + 1).collect();
+```
+* This will return a vector containing each element from the original vector incremented by **1**.
+
+* **Example : Iterator Adapter** 
+
+```rust
+fn main(){
+   let numbers: Vec<i32> = vec![1, 2, 3];
+
+   // using the map iterator adapter
+   let even_number: Vec<i32> = numbers.iter().map(|i| i*2).collect();
+
+   println!("Numbers = {:?}", numbers);
+   println!("even_numbers = {:?}", even_number);
+}
+```
+
+* Output : 
+
+```plain
+Numbers = [1, 2, 3]
+even_numbers = [2, 4, 6]
+```
+
+  
+### Range in Rust : 
+
+* One of the other ways to create an iterator is to used the range notation. An example of a range is `1..6` which is an iterator. For example,
+```rust
+fn main(){
+    // looping through a range
+    for i in 1..6 {
+        println!("{}", i);
+    }
+}
+```
+* Output : 
+```plain
+1
+2
+3
+4
+5
+```
+
+
+
+
+
+
+
+
+
+
+
+## Rust Error Handling : 
+
+
 
