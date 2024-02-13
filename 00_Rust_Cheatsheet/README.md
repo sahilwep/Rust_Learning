@@ -3213,5 +3213,9 @@ fn main(){
 
 ## Rust Error Handling : 
 
+* An error is an unexpected behavior or event in a program that will produce an unwanted output.
+* In Rust, errors are of two categories: 
+  * Unrecoverable Errors
+  * Recoverable Errors
 
 
