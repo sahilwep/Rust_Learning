@@ -1,13 +1,14 @@
-use std::fs::File;
-
 fn main(){
-   let data_result = File::open("data.txt");
 
-   // using match for Result type
-   let data_file = match data_result {
-      Ok(file) => file,
-      Err(error) => panic!("Problem opening the data file : {:?}", error),
+   let text = "Hello, world!";
+
+   let character_option = text.chars().nth(11);
+
+   // using match for Options type
+   let character = match character_option {
+      None => "empty".to_string(),
+      Some(c) => c.to_string()
    };
 
-   println!("Data file : {:?}", data_file);
+   println!("Character at index 11 is {}", character);
 }

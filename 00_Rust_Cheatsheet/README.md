@@ -3318,3 +3318,82 @@ match data_result {
 * We can study it on pattern matching later on.
 
 ### The Option Enum 
+
+* The `Option` type or `Option<T>` type is an `enum` type just like `Result` with two possible variants.
+  * `None` -> to indicate failure with no value
+  * `Some(T)` -> a value with type `T`
+* Let's look at an example :
+
+```rust
+fn main(){
+
+   let text = "Hello world";
+
+   let character_option = text.chars().nth(15);
+
+   // using match for Options type
+   let character = match character_option {
+      None => "empty".to_string(),
+      Some(c) => c.to_string()
+   };
+
+   println!("Character at index 15 is {}", character);
+}
+```
+* Output :
+
+```plain
+Character at index 15 is empty
+```
+* Here, the method `text.chars().nth(15)` return an `Option<String>`. So, to get the value out of the `Option`, we use a `match` expression.
+
+* In the example above, the 15th index of the string `text` doesn't exist. Thus, the `Option` type returns a `None` which matches the `"empty"` string.
+
+```rust
+None => "empty".to_string()
+```
+
+* If we have to get `11th` index of ths string `text`, the `Option` enum would return `Some(c)`, where `c` is the character in the `11th` index.
+
+* Let's update the above example to find out the 11th index in the string.
+
+```rust
+fn main(){
+
+   let text = "Hello, world!";
+
+   let character_option = text.chars().nth(11);
+
+   // using match for Options type
+   let character = match character_option {
+      None => "empty".to_string(),
+      Some(c) => c.to_string()
+   };
+
+   println!("Character at index 11 is {}", character);
+}
+```
+* Output : 
+```plain
+Character at index 11 is d
+```
+
+### Difference between Result and Option enum in Rust : 
+
+* `Option` enum can return `None`, which can indicate failure.
+* However, sometimes it is essential to express why an operation failed. Thus, we have the `Result` enum, which gives us the `Err` with the reason behind the failure of the operation.
+* In short, 
+  * `Option` is about `Some` or `None` (value or no value)
+  * `Result` is about `Ok` or `Err` (result or error result)
+
+
+
+
+
+
+
+
+
+
+## Rust unwrap() and expect()
+
