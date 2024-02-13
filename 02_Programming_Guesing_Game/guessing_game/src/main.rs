@@ -1,9 +1,13 @@
+use std::fs::File;
+
 fn main(){
-   let numbers: Vec<i32> = vec![1, 2, 3];
+   let data_result = File::open("data.txt");
 
-   // using the map iterator adapter
-   let even_number: Vec<i32> = numbers.iter().map(|i| i*2).collect();
+   // using match for Result type
+   let data_file = match data_result {
+      Ok(file) => file,
+      Err(error) => panic!("Problem opening the data file : {:?}", error),
+   };
 
-   println!("Numbers = {:?}", numbers);
-   println!("even_numbers = {:?}", even_number);
+   println!("Data file : {:?}", data_file);
 }

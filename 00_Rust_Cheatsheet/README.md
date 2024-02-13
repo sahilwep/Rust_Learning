@@ -3218,4 +3218,103 @@ fn main(){
   * Unrecoverable Errors
   * Recoverable Errors
 
+### Unrecoverable Errors in Rust 
 
+* Unrecoverable errors are errors from which a program stops it's execution. As the name suggest, we cannot recover from unrecoverable errors.
+* These errors are known as **panic** and can be trigger explicitly by calling the `painc!` macro. Example,
+
+```rust
+fn main(){
+   println!("Hello world!");
+
+   // Explicitly exit the program with an unrecoverable error :
+   panic!("Crash");
+}
+```
+* Output : 
+
+```plain
+Hello world!
+thread 'main' panicked at src/main.rs:5:4:
+Crash
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+* Here, the call to the `panic!` macro causes an unrecoverable error.
+`thread 'main' panicked at src/main.rs:5:4:`
+* Notice that the program will still runs the expression above `panic!` macro. We can still see `Hello World!` printed to the screen before the error message.
+* The `painc!` macro takes in an error message as an argument.
+
+### Example : Rust unrecoverable error : 
+
+```rust
+fn main(){
+   let number = [1, 2, 3];
+
+   println!("Unknown index value = {}", number[3]);
+}
+```
+* Output : 
+```plain
+error: this operation will panic at runtime
+ --> src/main.rs:4:41
+  |
+4 |    println!("Unknown index value = {}", number[3]);
+  |                                         ^^^^^^^^^ index out of bounds: the length is 3 but the index is 3
+  |
+  = note: `#[deny(unconditional_panic)]` on by default
+```
+* Here, Rust stops us from compiling the program because it knowns the operations will panic at runtime.
+* The array `number` does not have a value at index **3** i.e `number[3]`.
+
+### Recoverable Errors : 
+
+* Recoverable Errors are errors that won't stop a program from a execution. Most errors are recoverable, and we can easily take action based on the type of error.
+* For example, if you try to open a file that doesn't exist, you can create the file instead of stopping the execution of the program or exiting the program with a panic. For example,
+  
+```rust
+use std::fs::File;
+
+fn main(){
+   let data_result = File::open("data.txt");
+
+   // using match for Result type
+   let data_file = match data_result {
+      Ok(file) => file,
+      Err(error) => panic!("Problem opening the data file : {:?}", error),
+   };
+
+   println!("Data file : {:?}", data_file);
+}
+```
+
+* If the `data.txt` file exist, the output is : 
+
+```plain
+Data file : File { fd: 3, path: "/Users/sahilwep/Developer/Rust/data.txt", read: true, write: false }
+```
+* If the  `data.txt` file doesn't exist, the output is : 
+
+```plain
+thread 'main' panicked at src/main.rs:9:21:
+Problem opening the data file : Os { code: 2, kind: NotFound, message: "No such file or directory" }
+```
+
+### The Result Enum : 
+* In the above example, the return type of the `File::open('data.txt)` is a `Result<T, E>`.
+* The `Result<T, E>` type returns either a value or an error in Rust. It is an `enum` type with two possible variants.
+  * `Ok(T)` -> Operation succeeded with value `T`
+  * `Err(E)` -> Operation failed with an error `E`
+* Here, `T` and `E` are **generic types**. We will discuss it later on.
+* Th most basic way to see whether a `Result` enum has a value or error is use pattern matching with a `match` expression.
+
+```rust
+match data_result {
+      Ok(file) => file,
+      Err(error) => panic!("Problem opening the data file : {:?}", error),
+   };
+```
+
+* When the result is `Ok`, this code will return the file, and when the result is `Err` it will return a `panic!`.
+* We can study it on pattern matching later on.
+
+### The Option Enum 
