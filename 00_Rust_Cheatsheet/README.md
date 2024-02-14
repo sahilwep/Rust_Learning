@@ -3397,3 +3397,70 @@ Character at index 11 is d
 
 ## Rust unwrap() and expect()
 
+* Unwrap in Rust returns the result the operations for `Option` and `Result` enums.
+* If unwrap encounters an error `Err` or a `None`, it will panic and stop program execution.
+* Unwrap method is defined on both `Option` and `Result` type.
+* An `Option` enum type can be handled by using the `match` expression as well as `unwrap()`.
+
+* **Example : Using the match expression**
+
+```rust
+
+// Function to find a user by their username which returns as Option type 
+fn get_user(username: &str) -> Option<&str> {
+   if username.is_empty() {
+      return None;
+   }
+   return Some(username);
+}
+
+fn main(){
+      // return an Option
+      let user_option = get_user("Sahil");
+
+      // user of match expression to get the result out of Option
+      let result = match user_option {
+         Some(user) => user,
+         None => "not found!",
+      };
+
+      // print the result 
+      println!("User = {:?}", result);
+}
+```
+* If we pass some value inside the `user_option` it will return that value, else if there is no values, then it will return the `not found!`. 
+* Here, we have a `get_user` function that returns an `Option` type. it can either return `Some(&str)` or `None`
+
+* Now this program we can use the `unwrap()` method to get rid of the `match` expression which is a little verbose.
+* **Let's use `unwrap()` in the above example.**
+
+```rust
+
+// Function to find a user by their username which returns as Option enum
+fn get_user(username: &str) -> Option<&str> {
+   if username.is_empty() {
+      return None;
+   }
+   return Some(username);
+}
+
+fn main(){
+      // use of unwrap method of get the result of Option enum from get_user function
+      let result = get_user("Sahil").unwrap();
+
+      // print the result 
+      println!("User = {:?}", result);
+}
+```
+* Output = "Sahil"
+* Both the `match` expression and `unwrap()` gives us the same output. 
+* The only difference being that `unwrap()` will panic if the return value is a None.
+* If we update the above program to send an empty username argument to the `get_user()` method. it will panic.
+```plain
+thread 'main' panicked at src/main.rs:12:33:
+called `Option::unwrap()` on a `None` value
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+### The `expect()` Method
+
