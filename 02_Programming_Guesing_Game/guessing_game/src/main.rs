@@ -1,16 +1,18 @@
+use std::num::ParseIntError;
 
-// Function to find a user by their username which returns as Option enum
-fn get_user(username: &str) -> Option<&str> {
-   if username.is_empty() {
-      return None;
-   }
-   return Some(username);
+// function to parse an integer
+fn parse_int() -> Result<i32, ParseIntError> {
+   // Example of ? where value is unwrapped
+   let x: i32 = "12".parse()?; // x = 12
+
+   // Example of ? where error is returned
+   let y: i32 = "12a".parse()?;  // returns an Err() immediately
+
+   Ok(x + y) // Doesn't reach this line
 }
 
-fn main(){
-      // use of unwrap method of get the result of Option enum from get_user function
-      let result = get_user("Sahil").unwrap();
+fn main() {
+   let res = parse_int();
 
-      // print the result 
-      println!("User = {:?}", result);
+   println!("{:?}", res);
 }

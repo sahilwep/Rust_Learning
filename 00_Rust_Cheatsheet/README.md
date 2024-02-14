@@ -3464,3 +3464,95 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 ### The `expect()` Method
 
+* `expect()` is very similar to `unwrap()` with the addition a custom panic message as an argument.
+* The `expect()` method is defined on both `Option` and `Result` type.
+* Let's update the above example to use `expect()` instead of `unwrap()`.
+
+```rust
+
+// Function to find a user by their username which returns as Option enum
+fn get_user(username: &str) -> Option<&str> {
+   if username.is_empty() {
+      return None;
+   }
+   return Some(username);
+}
+
+fn main(){
+      // use of expect method of get the result of Option enum from get_user function
+      let result = get_user("Sahil").expect("fetch user");
+
+      // print the result 
+      println!("User = {:?}", result);
+}
+```
+* If we pass the argument to `get_user` method it will return this.
+
+```plain
+User = "Sahil"
+```
+* If we didn't pass any argument to the `get_user` method, it will return this.
+```plain
+thread 'main' panicked at src/main.rs:12:33:
+fetch user
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+* Here, we use the `expect()` with a panic message as the argument.
+
+* `expect()` and `unwrap()` will produce the same result if there's no possibility of `Options` returning `None` and `Result` returning `Err`.
+
+* **Note :** `unwrap()` and `expect()` are utility method to work with `Option` and `Result` types. It makes our program concise and prevents the need to write verbose `match` expression to return a result.
+
+### The Question Mark (?) Operator
+
+* The question mark (`?`) operator is a shorthand for returning the `Result`. It can only be applied to `Result<T, E>` and `Option<T>` type.
+* When we apply `?` to `Result<T, E>` type:
+  * If the value is `Err(e)`, it returns an `Err()` immediately
+  * If the value is `Ok(x)` it unwraps and returns `x`
+* **Let's look at an example**
+```rust
+use std::num::ParseIntError;
+
+// function to parse an integer
+fn parse_int() -> Result<i32, ParseIntError> {
+   // Example of ? where value is unwrapped
+   let x: i32 = "12".parse()?; // x = 12
+
+   // Example of ? where error is returned
+   let y: i32 = "12a".parse()?;  // returns an Err() immediately
+
+   Ok(x + y) // Doesn't reach this line
+}
+
+fn main() {
+   let res = parse_int();
+
+   println!("{:?}", res);
+}
+```
+
+* Output : 
+
+```plain
+Err(ParseIntError { kind: InvalidDigit })
+```
+
+* This way, error handling in the function is reduced to a single line of code, making it cleaner and easier to read.
+* Similarly, when we apply `?` to `Option<T>` type:
+  * if the value is `None`, then it returns `None`
+  * if the value is `Some(x)`, then it unwraps the value and return `x`
+
+* **NOTE :** The question mark operator (`?`) can only be used in a function that return `Result` or `Option`.
+
+
+
+
+
+
+
+
+
+
+## Rust Ownership : 
+
