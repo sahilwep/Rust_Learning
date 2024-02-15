@@ -1,13 +1,12 @@
 fn main(){
-   let num = 12;  // num comes into scope
+   let mut str = String::from("Sahil");
 
-   // ownership of num copied into the function
-   print_num(num);
+   // mutable reference 1
+   let ref1 = &mut str;
+   
+   // error 
+   // mutable reference 2
+   // let ref2 = &mut str;
 
-   // num variable can be used here
-   println!("Fruit = {}", num);
+   println!("{}, {} ", ref1, ref2);
 }
-
-fn print_num(num: i8) {
-   println!("num is  = {}", num);
-} // num goes out of scope
