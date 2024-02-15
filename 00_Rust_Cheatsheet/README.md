@@ -3546,13 +3546,154 @@ Err(ParseIntError { kind: InvalidDigit })
 * **NOTE :** The question mark operator (`?`) can only be used in a function that return `Result` or `Option`.
 
 
-
-
-
-
-
-
-
-
 ## Rust Ownership : 
 
+***
+* **Variable Scope in Rust**
+
+* Scope is a code block within the program for which a variable is valid. The scope of a variable define it's ownership.
+
+```rust 
+{// code block start here
+    let name = String::from("Sahil");
+    // we can do stuff with name
+}// code block ends
+// this scope ends, "name" is no longer valid and cannot be used.
+```
+***
+
+### Ownership Rules in Rust : 
+
+* Rust has some ownership rules. keep these rules in mind as we work through examples:
+  1. Each value in Rust has an owner.
+  2. There can only be one owner at a time.
+  3. When the owner goes out of scope, the value will be dropped.
+
+### Data Move in Rust : 
+
+* Sometimes, we might not want a variable to be dropped at the end of the scope. Instead, we want to transfer ownership of an item from one binding(variable) to another.
+
+* Here's an example to understand data movement and ownership rules in Rust.
+
+```rust
+fn main(){
+   // owner of the string value
+   // rule no. 1
+   let fruit1 = String::from("Banana");
+
+   // ownership moves to another variable
+   // only one owner at a time
+   // rule no. 2
+   let fruit2 = fruit1;
+
+   // cannot print variable fruit1 because ownership has moved
+   // error, out of scope, value is dropped
+   // rule no. 3
+   // println!("Fruit 1 = {}", fruit1);
+
+   // print value of fruit2 on the screen
+   println!("Fruit 2 = {}", fruit2);
+}
+```
+* Output : `Fruit 2 = Banana`
+
+* Here, `Fruit1` is owner of the `String`.
+
+* A String store data both on the stack and heap. This means that when we bind a `String` to a variable `fruit1`, the memory representation looks like this : 
+
+![Memory Representation of a String holding the value "Banana" bound to fruit1](assets/img_1.png)
+
+* A `String` holds a pointer to the memory that holds the content of the string, a length and a capacity in the stack. The heap on the right hand side of the diagram holds the contents of the `String`.
+
+* Now, when we assign `fruit1` to `fruit2`, this is how the memory representation looks like:
+
+![Memory Representation when String value "Banana" moves from fruit1 to fruit2](assets/img_2.png)
+
+* Rust will invalidate (drop) the first variable `fruit1`, and move the value to another variable `fruit2` This way two variable cannot point to the same content. At any point, there is only one owner of the value.
+
+* **NOTE :** The above concept is applicable for data types that don't have fixed size in memory and use the heap memory to store the contents.
+
+### Data Copy in Rust : 
+
+* Primitive type like `Integer`, `float` and `boolean` don't follow the `ownership rules`.
+* These types have known `size` at compile time and are stored entirely on the `stack`, so copies of the actual values are quick to make. For example, 
+
+```rust
+fn main(){
+   let x: u8  = 11;
+
+   // copies data from x to y
+   // ownership rules are not applied here.
+   let y = x;
+
+   println!("x = {}, y = {}", x, y);
+}
+```
+* Output : `x = 11, y = 11`
+
+* Here, `x` variable can be used afterward, unlike a move without worrying about ownership, even through `y` is assigned to `x`.
+
+* This Copying is possible because of the `Copy` trait available in primitive types in Rust. When we assign `x` to `y`, a copy of the data is made.
+* A `trait` is a way to define shared behavior in Rust. We will discuss afterwords.
+
+### Ownership in Functions : 
+
+* Passing a variable to a function will `move` or `copy`, just as an assignment. **Stack-only** type will copy the data when passed into a function. **Heap data** type will move the ownership of the variable to the function. Example : 
+
+#### 1. Passing String to a function :
+
+```rust
+fn main(){
+   let fruit = String::from("Mango");  // fruit comes into scope
+
+   // ownership of fruit moves into the function
+   print_fruit(fruit);
+
+   // fruit is moved to the function so is no longer available here
+   // error
+   // println!("Fruit = {}", fruit);
+}
+
+fn print_fruit(frt: String) {
+   println!("fruit is  = {}", frt);
+} // frt goes out of scope and is dropped, plus memory is freed
+```
+* Output : `fruit is  = Mango`
+
+#### 2. Passing Integer to a function :
+
+```rust
+fn main(){
+   let num = 12;  // num comes into scope
+
+   // ownership of num copied into the function
+   print_num(num);
+
+   // num variable can be used here
+   println!("Fruit = {}", num);
+}
+
+fn print_num(num: i8) {
+   println!("num is  = {}", num);
+} // num goes out of scope
+```
+* Output : 
+
+```plain
+num is  = 12
+Fruit = 12
+```
+
+* Here, the value of the number variable is copied into the function `print_number()` because the `i8`(integer) type used stack memory.
+
+
+
+
+
+
+
+
+
+
+
+## Rust Referencing and Borrowing : 

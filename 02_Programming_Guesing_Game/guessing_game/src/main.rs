@@ -1,18 +1,13 @@
-use std::num::ParseIntError;
+fn main(){
+   let num = 12;  // num comes into scope
 
-// function to parse an integer
-fn parse_int() -> Result<i32, ParseIntError> {
-   // Example of ? where value is unwrapped
-   let x: i32 = "12".parse()?; // x = 12
+   // ownership of num copied into the function
+   print_num(num);
 
-   // Example of ? where error is returned
-   let y: i32 = "12a".parse()?;  // returns an Err() immediately
-
-   Ok(x + y) // Doesn't reach this line
+   // num variable can be used here
+   println!("Fruit = {}", num);
 }
 
-fn main() {
-   let res = parse_int();
-
-   println!("{:?}", res);
-}
+fn print_num(num: i8) {
+   println!("num is  = {}", num);
+} // num goes out of scope
