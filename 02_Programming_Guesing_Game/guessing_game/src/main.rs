@@ -1,12 +1,13 @@
+// nested module
+pub mod player {
+   pub mod sprite {
+      pub fn create() {
+         println!("Called player::sprite::create");
+      }
+   }
+}
+
 fn main(){
-   let mut str = String::from("Sahil");
-
-   // mutable reference 1
-   let ref1 = &mut str;
-   
-   // error 
-   // mutable reference 2
-   // let ref2 = &mut str;
-
-   println!("{}, {} ", ref1, ref2);
+   // call public function create from sprite module which is inside player module
+   player::sprite::create();
 }

@@ -3830,3 +3830,146 @@ error[E0499]: cannot borrow `str` as mutable more than once at a time
 
 
 ## Rust Module : 
+
+
+* Modules in Rust help in splitting a program into logical units for better readability and organization.
+
+* Once a program gets larger, it is important to split into multiple files or namespaces. Modules help in structuring our program.
+
+* A module is a collection of items: function, struct and even other modules.
+
+### Defining a Module in Rust
+
+* The `mod` keyword is used to define a module. The syntax of module is:
+
+```rust
+// syntax of a module
+mod module_name{
+    // code
+}
+```
+* Here, `module_name` is the name of the module.
+
+* Now, let's define a module.
+
+```rust
+// a module named config
+mod config{
+   // a function print inside of the module
+   fn print() {
+      println!("config!");
+   }
+}
+```
+* In the above example, we create a module named `config` using the `mod` keyword.
+* Inside the module we can define multiple items. Here, we have defined the `print()` function.
+
+### Visibility of items inside a Module in Rust
+
+* Items inside a module can be private or public. By default, a module is private. It means items inside the module cannot be accessed outside of the module.
+* The `pub` keyword can eb used to give an item public visibility. Example,
+
+```rust
+// a module named config
+mod config{
+   // items in module by default have private visibility   
+   fn select() {
+      println!("config!");
+   }
+   // use `pub` keyword to override private visibility
+   pub fn print(){
+      println!("config!");
+   }
+}
+```
+* If we compile our code, we don't get any output because we have not used the function yet.
+
+* Now, let's call the functions inside the module.
+
+```rust
+// a module named config
+mod config{
+   // items in module by default have private visibility   
+   fn select() {
+      println!("config!");
+   }
+   // use `pub` keyword to override private visibility
+   pub fn print(){
+      println!("config!");
+   }
+}
+
+fn main(){
+    // public items inside module can be accessed outside the parent module
+    // call public print function from config module
+   config::print();
+}
+```
+* Output : `config!`
+
+* Here, we call the public function `print()` inside the `config` module using the syntax `config::print()`. The `::` operator  is used to separate the module name and the item to call inside the module.
+
+* However, private items inside the module are not accessible outside the module. If we call the private function `select()` inside the `config` module, we get a complication error.
+
+### Example: Using Module in Rust 
+
+```rust
+mod player {
+   // private function
+   fn focus(){
+      println!("called player::focus");
+   }
+   // private function
+   fn shift() {
+      println!("called player::shift");
+   }
+
+   // public function
+   pub fn jump() {
+      // call private function focus and shift inside the module
+      focus();
+      shift();
+      println!("called plyer::jump");
+   }
+}
+
+fn main(){
+   // call public function jump from player module
+   player::jump();
+}
+```
+
+* Output : 
+
+```plain
+called player::focus
+called player::shift
+called plyer::jump
+```
+
+### Nested Modules 
+
+* A module can be defined inside another module. This is known as module nesting. example,
+
+```rust
+// nested module
+pub mod player {
+   pub mod sprite {
+      pub fn create() {
+         println!("Called player::sprite::create");
+      }
+   }
+}
+
+fn main(){
+   // call public function create from sprite module which is inside player module
+   player::sprite::create();
+}
+```
+* Output : 
+
+```plain
+Called player::sprite::create
+```
+
+### The use keyword in Rust : 
