@@ -4002,5 +4002,106 @@ fn main(){
 Called player::sprite::create
 ```
 
-* Here, we use the `use` keyword to bring the `create()` function into the current scope from the `sprite` module which is inside the `player` module. This allows us to call the `create()` function directly, without having to full y qualify the name as `player::sprite::create()`
+* Here, we use the `use` keyword to bring the `create()` function into the current scope from the `sprite` module which is inside the `player` module. This allows us to call the `create()` function directly, without having to fully qualify the name as `player::sprite::create()`
+
+
+
+
+
+
+
+
+## Rust Crate and Package :
+
+* A crate can contain one or more Rust modules, which is turn can contain code, such as functions, type and constants.
+* A crate is of two types:
+  * Binary create
+  * Library crate
+
+* A **binary create** is a Rust program that compiles to an executable or multiple executable and has a `main()` function for each executable.
+
+* A **library crate** doesn't compile to an executable and doesn't have a `main()` function. A library crate generally defines a shared functionality that can be used in multiple projects.
+
+* Crates can be bundled together into a package.
+
+### Creating a Package in Rust 
+
+* Packages can be created using the **Cargo package manager**, which is built into Rust. Cargo comes pre-install with Rust.
+
+* We can use cargo to create a package. A **package** contains one or more crates that provide a set of functionality.
+
+* **NOTE :** A package can contain many binary crates, but at most only one library crate.
+
+#### Creating a Binary Package in Rust 
+
+* To create a binary package, we can use the `cargo` command in the terminal.
+```sh
+$ cargo new hello_world --bin
+```
+
+* Output :
+
+```plain
+Created binary (application) `hello_world` package
+```
+
+* We create a binary package `hello_world` using `cargo` and the `--bin` option. it is the default cargo behavior.
+
+* Let's look at the content of the `hello_world` package.
+```plain
+hello_world
+├── Cargo.toml
+└── src
+    └── main.rs
+```
+
+* Here, `hello_world` is the package directory
+* `Cargo.toml` is a file that contains metadata about the crate, such as it's name, version, and dependencies.
+* `src/main.rs` is the crate root and contains the source code of the binary package.
+
+#### Creating a Library Package in Rust
+
+* Similarly, we can create a library package in Rust using cargo.
+```sh
+$ cargo new hello_world_lib --lib
+```
+* Output :
+```plain
+Created library `hello_world_lib` package
+```
+
+* We create a library package `hello_world_lib` using cargo and the `--lib` option. 
+* Let's look at the contents of the `hello_world_lib` package.
+
+```plain
+hello_world_lib
+├── Cargo.toml
+└── src
+    └── lib.rs
+```
+
+* Here, `hello_world_lib` is the package directory
+* `Cargo.toml` is a file that contains metadata about the crate, such as its name, version and dependencies.
+* `src/lib.rs` is the crate root and contains the source code of the library package.
+
+* A package can contains `src/main.rs` and `src/lib.rs`. In this case, it has two crates: a binary and a library, both with the same name as the package. For example,
+
+```plain
+hello_world
+├── Cargo.toml
+└── src
+    └── lib.rs
+    └── main.rs
+```
+
+* **Note :** Cargo by convention passes the crate root files to the Rust compiler to build the library or binary.
+
+
+
+
+
+
+
+
+## Rust Cargo and Package manager : 
 
