@@ -4537,5 +4537,260 @@ roll = 5
 
 
 
+
+
+
 ## Rust Pattern Matching : 
 
+* Pattern matching is a way to match the structure of a value and blind variable to its parts. it is a powerful way to handel data and control flow of a Rust program.
+* We generally use the `match` expression when it comes to pattern matching.
+* The syntax of the `match expression is : 
+```rust
+match VALUE {
+    PATTERN => EXPRESSION,
+    PATTERN => EXPRESSION,
+    PATTERN => EXPRESSION,
+}
+```
+* Here, `PATTERN => EXPRESSION` are called pattern, a special syntax in Rust which usually works together with the `match` keyword.
+
+* **NOTE :** It is similar to **switch-case** but way more powerful.
+
+
+### Matching a variable in Rust
+
+* We can pattern match against the value of a variable. This is useful if our code wants to take some action based on a particular value. For example,
+
+```rust
+fn main(){
+   let x = 2;
+
+   // use match expression to pattern match against variable x
+   match x {
+      1 => println!("x is 1"),
+      2 => println!("x is 2"),
+      _ => println!("x is something else"),
+   }
+}
+```
+* Output : `x is 2`
+
+
+### Matching an Enum in Rust : 
+
+```rust
+fn main(){
+   enum Color {
+      Red,
+      Green,
+      Blue,
+   }
+
+   let my_color = Color::Red;
+
+   // use match expression to pattern match against variable x
+   match my_color {
+      Color::Red => println!("The color is red"),
+      Color::Green => println!("The color is green"),
+      Color::Blue => println!("The color is Blue"),
+   }
+}
+```
+
+* Output : `The color is red`
+
+### Matching Option and Result Type in Rust :
+
+* The most common case for pattern matching is with `Option` and `Result` enum types. Both the `Option` and `Result` type have two variants.
+
+* `Option` type has:
+  * `None` -> to indicate failure with no value
+  * `Some(T)` -> a value with type `T`
+* `Result` type has:
+  * `Ok(T)` -> operation succeeded with value T
+  * `Err(E)` -> operation failed with an error E
+* Let's look at example of how we can sue pattern matching on these types.
+
+
+
+*** 
+
+#### Difference b/w Option and Result enum in Rust : 
+
+##### Option : 
+* The Option enum is used to express the concept of an optional value. It has two variants:
+  1. `Some(T)`: Represents a value of type T.
+  2. `None`: Represents the absence of a value.
+
+* Here's an example of using `Option`:
+```rust
+// Option enum definition
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+// Example usage
+fn divide(x: f64, y: f64) -> Option<f64> {
+    if y != 0.0 {
+        Some(x / y)
+    } else {
+        None
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 2.0);
+
+    match result {
+        Some(quotient) => println!("Result: {}", quotient),
+        None => println!("Cannot divide by zero"),
+    }
+}
+```
+
+* In this example, the divide function returns an `Option<f64>`, and the `match` statement is used to handle both cases (`Some` and `None`).
+
+
+##### Result
+
+* The `Result` enum is used to represent the result of an operation that can either succeed or fail. It has two variants:
+  1. `Ok(T)`: Represents a successful result with a value of type `T`.
+  2. `Err(E)`: Represents an error with a value of type `E`.
+
+* Here's an example of using `Result`:
+
+```rust
+// Result enum definition
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
+// Example usage
+fn divide(x: f64, y: f64) -> Result<f64, &'static str> {
+    if y != 0.0 {
+        Ok(x / y)
+    } else {
+        Err("Cannot divide by zero")
+    }
+}
+
+fn main() {
+    let result = divide(10.0, 0.0);
+
+    match result {
+        Ok(quotient) => println!("Result: {}", quotient),
+        Err(err) => println!("Error: {}", err),
+    }
+}
+```
+* In this example, the `divide` function returns a` Result<f64, &'static str>`, where the error type is a string slice. The `match` statement is used to handle both successful and error cases.
+
+* Using `Option` and `Result` helps in writing more expressive and safe code, as it forces the programmer to explicitly handle cases where a value may be absent (`Option`) or an operation may fail (`Result`). This approach can reduce the likelihood of runtime errors and improve code reliability.
+
+*** 
+
+
+#### Example: Matching Option Type in Rust 
+
+* For Handling `Some(value)`
+```rust
+fn main(){
+   let my_option: Option<i32> = Some(222);
+
+   // use of match expression to match Option type 
+   match my_option {
+      Some(value) => println!("The option has a value of {}", value),
+      None => println!("The Option has no value "),
+   }
+}
+```
+* Output : `The option has a value of 222`
+
+* For Handling `None`
+```rust
+fn main(){
+   let my_option: Option<i32> = None;
+
+   // use of match expression to match Option type 
+   match my_option {
+      Some(value) => println!("The option has a value of {}", value),
+      None => println!("The Option has no value "),
+   }
+}
+```
+* Output : `The Option has no value`
+
+
+#### Example: Matching Result Type in Rust
+
+* For Handling `Ok(value)`
+```rust
+fn main(){
+   let my_option: Result<i32, &str> = Ok(100);
+
+   // use of match expression to match Result type 
+   match my_option {
+      Ok(value) => println!("The Result is {}", value),
+      Err(error) => println!("The error message is {} ", error),
+   }
+}
+```
+* Output : `The Result is 100`
+
+* For Handling `Err(error_value)`: 
+```rust
+fn main(){
+   let my_option: Result<i32, &str> = Err("e11h");
+
+   // use of match expression to match Result type 
+   match my_option {
+      Ok(value) => println!("The Result is {}", value),
+      Err(error) => println!("The error message is {} ", error),
+   }
+}
+```
+* Output : `The error message is e11h`
+
+
+### `if let` Expression in Rust :
+
+* The `if let` expression in Rust is a shorthand for a `match` expression with only one pattern/arm to match.
+
+* It allows us to match on a value and then execute code only if the match is successful.
+
+```rust
+fn main(){
+   let my_option: Option<i32> = Some(222);
+
+   // use of if let expression on the Option type
+   if let Some(value) = my_option {
+      println!("The option has a value of {}", value);
+   } else {
+      println!("The option has no value ");
+   }
+}
+```
+* Output : `The option has a value of 222`
+
+* Here, the `if let` expression is matching on the `my_option` variable and binding the value of `Some` variant to the `value` variable.
+  
+* If the match is successful, the code inside the `if` block is executed. if the match is not successful, the code inside the `else` block is executed.
+
+### Common Use of Pattern Matching in Rust
+* As you have seen, pattern matching is useful in numerous situation. Some common use cases for pattern matching include:
+  * Matching against any value like integer.
+  * Matching against enum, struct or tuple.
+  * Expressing conditional logic
+  * Destructing data structure or destructing element of an iterator in a for loop
+  * Error handling with Result and Option types.
+
+
+
+
+
+
+
+
+## Rust Generics :
