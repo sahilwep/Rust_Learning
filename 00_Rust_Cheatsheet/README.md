@@ -1397,6 +1397,315 @@ Person height = 190
 
 
 
+## Rust Enum : 
+
+* Enums (or enumeration) is a user-defined data type that allows us to select a value from a list of related values.
+
+* In Rust, we use the `enum` keyword to create an enum. For example,
+
+```rust
+enum Sport {
+    Basketball,
+    Volleyball,
+    Football,
+    Cricket,
+}
+```
+* Here, we have created an enum named `Sport` with a list of values `Basketball`, `Volleyball`, `Football` and `Cricket`.
+* These enum value are known as `variants`.
+
+
+
+*** 
+
+* **Struct vs Enums**
+
+* Structs (Structures):
+  * Use structs when you need to represent a single entity with multiple properties.
+  * A struct is a way to group multiple variables (fields) under a single name.
+  * Each field within a struct can have a different data type.
+  * Structs are often used to create records or objects that represent a single, cohesive unit of data.
+  * Example:
+```rust
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+let my_point = Point { x: 10, y: 20 };
+```
+
+* Enums (Enumerations):
+  * Enums are suitable when you have a type that can exist in multiple forms or states.
+  * An enum is a type that represents a set of named values, called variants.
+  * Enums are useful when you have a finite set of possibilities, and each possibility is distinct.
+  * Enums can have associated data with each variant, allowing for more complex data representations.
+  * Example:
+
+```rust
+enum Shape {
+    Circle(f64),
+    Rectangle(i32, i32),
+    Triangle(i32, i32, i32),
+}
+
+let my_shape = Shape::Circle(5.0);
+```
+* In this example, the Shape enum has three variants (Circle, Rectangle, and Triangle), each carrying different data types.
+  
+In summary, structs are used for defining structures with named fields, while enums are used for defining types that can have a finite set of distinct values (variants), often with associated data. Each has its own use case, and the choice between them depends on the nature of the data you are modeling.
+
+***
+
+
+
+
+### When to use Enum in Rust :
+
+* Let's look at a situation where we want to define an enum.
+
+* Suppose you are creating a program where you have to store a list of directions, and we know that there will be only four possible values for direction: North, East, West, and South.
+* In this case, we can use an enum where each variant will be the direction.
+
+```rust
+enum Direction {
+   North,
+   East,
+   South,
+   West,
+}
+```
+* Now we can access each of the enum variants whenever we have to use a direction in our program.
+
+> **NOTE :** By Convention, we use the Pascal case for enum names and values. In Pascal case, we write the first letter of the word(s) in uppercase.
+
+
+### Accessing Enum Variants in Rust : 
+
+* To access enum values, we first have to create enum instances. 
+
+```rust
+enum Direction {
+   North,
+   East,
+   South,
+   West,
+}
+```
+
+* Now, let's create instances of each enum variant:
+```rust
+  let north = Direction::North;
+   let east = Direction::East;
+   let south = Direction::South;
+   let west = Direction::West;
+```
+
+* Here, `Direction::North` represent the enum variant `North` of the `Direction` enum, and we are assigning it to the variable `north`, Similarly we are doing for others.
+
+### Rust Enum Data Type 
+* Now let's see one example of how enum works in Rust.
+
+```rust
+// define enum Direction
+#[derive(Debug)]
+enum Direction {
+   North,
+   East,
+   South,
+   West,
+}
+
+fn main(){
+
+   // Create instances of each enum variant:
+   let north = Direction::North;
+   let east = Direction::East;
+   let south = Direction::South;
+   let west = Direction::West;
+
+    // print enum values
+   println!("{:?}",north);
+   println!("{:?}",east);
+   println!("{:?}",south);
+   println!("{:?}",west);
+}
+```
+* Output : 
+
+```plain
+North
+East
+South
+West
+```
+
+> **NOTE :** We can define enum inside or outside the main function.
+> We have used `#[derive(Debug)]` above the enum definition, it's because this allows Rust to print the variants inside the enum.
+
+
+
+### Initializing Enum Variants with Values in Rust 
+
+* In Rust, we can also initialize enum variants by assigning individual values. For example,
+
+```rust
+#[derive(Debug)]
+enum Result {
+   Score(f64),
+   Valid(bool),
+}
+
+fn main(){
+
+   // Create instances of each enum variant:
+   let num = Result::Score(3.14);
+   let is_passed = Result::Valid(true);
+
+   println!("num = {:?}",num);
+   println!("isPassed = {:?}",is_passed);
+}
+```
+* Output : 
+
+```plain
+num = Score(3.14)
+isPassed = Valid(true)
+```
+* In the above example, we have created enum with different type of variants.
+* Variants : 
+  * `Score`- f64
+  * `Valid` - boolean type
+
+
+### Enum with different Data Types in Rust :
+
+* In Rust, we can also create enums where the enums variants are of different data types : struct, tuple, string, etc.
+
+1. **Enums with a struct variant**
+
+```rust
+enum Game {
+    Quit,
+    Position{ x : i32, y : i32},
+}
+```
+* Here the `Game` enum has an anonymous struct `Position {x : i32, y: i32}` as a variants.
+
+2. **Enum with a tuple variant**
+
+```rust
+enum Game {
+    Quit,
+    ChangeBackground(i32, i32, i32),
+}
+```
+* Here, the `Game` enum has a tuple `ChangeBackground(i32, i32, i32)` as a variant.
+
+3. **Enum with a string variant**
+
+```rust
+enum Game {
+    Quit, 
+    Print(String),
+}
+```
+* Here, the `Game` enum has a `Print(String)` variant.
+
+### Example: Enum Variants of Different Data Types
+
+* Earlier, we see that enum variants can be of different data types. We can even create an enum where each variant is of different type. That is one variant will be a string, another one will be a struct and so on.. For example,
+
+```rust
+// define enum with multiple variants and data types
+#[derive(Debug)]
+enum Game {
+   Quit,
+   Print(String),
+   Position { x : i32, y : i32},
+   ChangeBackground(i32, i32, i32),
+}
+
+fn main(){
+
+   // instances enum with variant:
+   let quit = Game::Quit;
+   let print = Game::Print(String::from("Sahilwep"));
+   let position = Game::Position{x: 10, y: 20};
+   let color = Game::ChangeBackground(200, 255, 255);
+
+   // print enum values 
+   println!("quit = {:?}", quit);
+   println!("print = {:?}", print);
+   println!("position = {:?}", position);
+   println!("color = {:?}", color);
+}
+```
+
+* Output : 
+
+```plain
+quit = Quit
+print = Print("Sahilwep")
+position = Position { x: 10, y: 20 }
+color = ChangeBackground(200, 255, 255)
+```
+
+### Mutable Enum in Rust : 
+
+* To create mutable enum we can use `mut` keyword while initializing the enum. Example,
+
+```rust
+
+fn main(){
+   // define enum with multiple variants and data types
+   #[derive(Debug)]
+   enum Animal {
+      Dog(String, f64),
+      Cat(String, f64),
+   }
+
+   // initialize a mutable enum variant with values
+   let mut dog = Animal::Dog(String::from("Benny"), 37.5);
+
+   
+   // initialize a non-mutable enum variant with values
+   let cat = Animal::Dog(String::from("maya"), 22.4);
+
+   // print enum values before changing : 
+   println!("Dog before = {:?}", dog);
+   println!("Cat before = {:?}", cat);
+
+   // change the value of mutable enum variant
+   dog = Animal::Dog(String::from("Sterling"), 21.3);
+
+   // print enum values after change.
+   println!("\n\nDog after = {:?}", dog);
+   println!("Cat after = {:?}", cat);
+}
+```
+
+* Output : 
+
+```plain
+Dog before = Dog("Benny", 37.5)
+Cat before = Dog("maya", 22.4)
+
+
+Dog after = Dog("Sterling", 21.3)
+Cat after = Dog("maya", 22.4)
+```
+* Here, we have initialized an enum variant and assigned it to a variable `dog` using the `mut` keyword. This allows us to change the values of `dog` variable.
+
+
+
+
+
+
+
+
+
+
 
 
 ## Rust Function : 

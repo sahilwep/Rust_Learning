@@ -1,12 +1,27 @@
-fn main(){
-   let mut c:Vec<i128>=vec![ 1,2,3,7];
-   println!("The value of c is {:?}",c);
-   let  d: &mut Vec<i128>= &mut c;
-   println!("The value of d is {:?}",d);
-   d.push(5);
-   d.insert(1,700);
-   d.remove(2);
-   println!("The value of d after insertion  is {:?}",d);
-   println!("The value of c is {:?}",c);
 
+fn main(){
+   // define enum with multiple variants and data types
+   #[derive(Debug)]
+   enum Animal {
+      Dog(String, f64),
+      Cat(String, f64),
+   }
+
+   // initialize a mutable enum variant with values
+   let mut dog = Animal::Dog(String::from("Benny"), 37.5);
+
+   
+   // initialize a non-mutable enum variant with values
+   let cat = Animal::Dog(String::from("maya"), 22.4);
+
+   // print enum values before changing : 
+   println!("Dog before = {:?}", dog);
+   println!("Cat before = {:?}", cat);
+
+   // change the value of mutable enum variant
+   dog = Animal::Dog(String::from("Sterling"), 21.3);
+
+   // print enum values after change.
+   println!("\n\nDog after = {:?}", dog);
+   println!("Cat after = {:?}", cat);
 }
