@@ -4794,3 +4794,168 @@ fn main(){
 
 
 ## Rust Generics :
+
+* Generics allows us to write code that is flexible and be reuse with different types of data, without having to write separate implementations for each type. It helps us write code that can handle values of any type in a type-safe and efficient way.
+
+* With the help of generics, we can define placeholder type for our methods, function, structs, enums and traits.
+
+### Using Generics in Rust 
+
+* We can understand generics by taking a look at [Rust Hashmap](#rust-hashmap).
+
+* `HashMap` uses generics which allows creation of reusable and efficient code, as a single implementation that work with different types.
+* A Rust `HashMap` has two `generic types`, one for the `key` and the second for the `value`.
+* A HashMap type looks like this:
+
+```rust
+HashMap<K, V>
+```
+* Where `<K, V>`: `K` is the type of key and `V` is the type of the value.
+* Now, when we create a HashMap we can set any type to `K` and `K`.
+
+```rust
+let mut numbers: HashMap<i32, &str> = HashMap::new();
+```
+* Here, the angle bracket `<i32, &str>` notation denotes the type of key and type of value of the HashMap. The type of the Key `K` is `i32` and the type of the value `V` is `&str`.
+
+* Similarly, we create a HashMap and set the type of both key and value to `&str`.
+
+```rust
+let mut language_codes: HashMap<&str, &str> = HashMap::new();
+```
+
+* Using generics to define the type of HashMap helps us work with numerous arbitrary type available in Rust.
+  
+
+* **NOTE :**
+  * Generics or generic type use a single character like `K`,`V`,`T`,`U` to distinguish from actual concrete type like `String`, `&str`, `i32`.
+* As a convention,
+  * `T`, `U` are used for arbitrary types
+  * `K`, `V` are used for key-value types
+  * `E` is used for error type
+
+### Example: Using Generics in Rust
+
+```rust
+use std::collections::HashMap;
+
+fn main(){
+   // create a HashMap with type i32 and &str
+   let mut numbers: HashMap<i32, &str> = HashMap::new();
+
+   // insert values to numbers HashMap
+   numbers.insert(1, "One");
+   numbers.insert(2, "Two");
+
+   println!("Numbers: {:?}", numbers);
+
+   // create a HashMap with types &str and &str
+   let mut language_code: HashMap<&str, &str> = HashMap::new();
+
+   // Insert values to language_codes HashMap
+   language_code.insert("EN", "English");
+   language_code.insert("RU", "Russian");
+   language_code.insert("HI", "Hindi");
+
+   println!("Language Codes: {:?}", language_code);
+}
+```
+
+* Output : 
+
+```plain
+Numbers: {1: "One", 2: "Two"}
+Language Codes: {"EN": "English", "RU": "Russian", "HI": "Hindi"}
+```
+
+* Here, we create two HashMap data structure: `HashMap<i32, &str>` and `HashMap<&str, &str>`.
+
+* This is possible because HashMap implementation uses generics and work with different types.
+
+### Generic Struct in Rust
+
+* We can create a generic struct data structure in Rust with the help of generics. For example, we can declare a struct with **generic parameter(s)**.
+
+```rust
+struct Point<T>{
+    x: T,
+    y: T,
+}
+```
+* Here, we create a struct `Point` with generic type parameter `T` in angle brackets. Inside the body of the struct, we use the `T` data type for `x` and `y`.
+
+* Now, to use the generic struct `Point` we can initialize it and bind it to a variable.
+
+```rust
+let int_point = Point {x: 1, y: 2};
+let float_point = Point(x: 1.3, y: 42.2);
+```
+* Here, we initialize the `Point` struct twice, first with integer values and second with float values.
+
+#### Example: Generic Struct in Rust
+
+
+```rust
+
+```
+
+* Output:
+
+```plain
+
+```
+
+
+
+### Generic Function in Rust
+
+* We can also create function with generic types as parameter(s).
+* Here is the syntax of a generic function.
+
+```rust
+// generic function with  single generic type
+fn my_function<T>(x: T, y: T) -> T {
+   // function body
+   // do something with `x` and `y`
+}
+
+// generic function with multiple generic types
+fn my_function<T, U> (x: T, y: U) {
+   // function body
+   // do something with `x` and `y`
+}
+```
+
+* Here, `<T>` in the function definition signifies a generic function over type `T`. Similarly, `<T, U>` signifies a generic function over type `T` and `U`.
+
+#### Example: Generic Function in Rust
+
+```rust
+
+fn main(){
+   // generic function to find minimum b/w two inputs
+   fn min<T: PartialOrd> (a: T, b: T ) -> T {
+      if a < b {
+         return a;
+      } else {
+         return b;
+      }
+   }
+   // call generic function with integer type as parameters
+   let result1 = min(2, 7);
+
+   // call generic function with float type as parameters
+   let result2 = min(2.1, 3.1);
+
+   println!("Result1 = {}", result1);
+   println!("Result2 = {}", result2);
+}
+```
+
+* Output : 
+```plain
+Result1 = 2
+Result2 = 2.1
+```
+
+
