@@ -5218,7 +5218,251 @@ x: 20
 
 ## Rust File Handling : 
 
+* File handling is a way to deal with data in file. file handling enables us to open, read, write, and update file on the local system.
+
+* File handling is generally known as File I/O.
+
+
+### File Struct in Rust : 
+
+* In Rust, the `std::fs::File` struct represent a file. It allows us to perform read/write operations on a file.
+* The file I/O is performed through the `std::fs` module which provides functions for working with the file system.
+* All methods in the `File` struct return a variant of the `std::io::Result` or simply the `Result` enum.
+* Let's look at the basics of file I/O in Rust with these operations:
+  * **Opening a file**
+  * **Reading from a file**
+  * **Writing to a file**
+  * **Removing a file**
+  * **Appending to a file**
+
+
+### Opening a File in Rust :
+
+* To open a file in Rust, we use the `File::open()` method. This method takes a file path as an argument and return a `File` object. if the file does not exist, it returns an error(`Err`).
+* Let's look at an example.
+
+```rust
+use std::fs::File;
+
+fn main(){
+   // Open a file in read only mode in the local file system
+   let data_result = File::open("file.txt");
+
+   // Reading a file return a Result enum
+   // Result can be a file or an error 
+   let data_file = match data_result {
+      Ok(file) => file,
+      Err(error) => panic!("Problem opening the data file: {:?} ", error),
+   };
+
+   println!("Data File: {:?} ", data_file);
+}
+```
+
+* Output : 
+
+```plain
+Data File: File { fd: 3, path: "/path/rust/file.txt", read: true, write: false }
+```
+* Here, we import the module `std::fs::File` on the top of the program to use the file I/O functions.
+* To open a file, we call `File::open("file.txt")` which reads the `file.txt` file in the local file system.
+* The `open()` function returns a `Result` enum which will return the `File` object or an `Err`.
+* Then, we pattern match the `data_result` variable and `panic!` if there is an error with opening the file. if opening the file doesn't error, we output the `File` object.
+
+### Reading a File in Rust :
+
+* To read a file in Rust, we use the `read_to_string()` method of the `std::io::Read` trait. This method reads all bytes until end of the file (EOF) and copies it to a mutable string.
+* Here's an example.
+
+```rust
+use std::fs::File;
+use std::io::Read;
+
+fn main(){
+   // read a file in the local file system
+   let mut data_file = File::open("file.txt").unwrap();
+
+   // Create an empty mutable string
+   let mut file_content = String::new();
+
+   // Copy contents of file to a mutable string
+   data_file.read_to_string(&mut file_content).unwrap();
+
+   println!("File content: {:?}", file_content);
+}
+```
+* Output : 
+
+```plain
+File content: "hello\n"
+```
+
+* Here, we import two modules: `std::fs::File` and `std::io::Read` for reading a file. We first open the file `data.txt` with `File::open("file.txt")` method call and bind its result to a variable `data_file`.
+
+* Once we open the file, we use the `read_to_string()` method which takes an empty mutable string `file_content` as an argument and copies the content of the file `file.txt` to `file_content`.
+
+* Note: 
+  * We use `unwrap()` twice to get the result from the method calls. `unwrap()` is a utility method to work with `Option` and `Result` type.
+  * `read_to_string()` comes from the `std::io::Read` trait.
+
+### Writing to a File in Rust :
+
+* To write to a file in Rust, we can use the `write()` method from the `std::io::Write` trait. This method writes content to a file.
+* Example,
+
+```rust
+use std::fs::File;
+use std::io::Write;
+
+fn main(){
+   // create a file 
+   let mut data_file = File::create("data.txt").expect("Creation failed");
+
+   // write content to the file
+   data_file.write("Hello world".as_bytes()).expect("Write Failed");
+
+   println!("Created a file data.txt");
+}
+```
+* Output : 
+
+```plain
+Created a file data.txt
+```
+
+* Here, we import `std::fs::File` and `std::io::Write` module for writing to a file. We first create a file `data.txt` with the `File::create("data.txt")` method and bind it to a mutable variable `data_file`.
+
+* After we create a file, we write to the file using the `write()` method with the content `"Hello World"`.
+
+### Removing a File in Rust :
+
+* To remove or delete a file in Rust, we can use the `remove_file()` method from the `std::fs` module.
+* For example,
+
+```rust
+use std::fs;
+
+fn main(){
+   // Remove a file 
+   fs::remove_file("data.txt").expect("could not remove file");
+
+   println!("Removed file data.txt");
+}
+```
+* Output : 
+
+```plain
+Removed file data.txt
+```
+
+* Here, we import the `std::fs` module for deleting a file. We use the `remove_file()` method to delete the file `data.txt`.
+
+* If the operations does not proceed, we return a custom message.
+* If the file `data.txt` not found or cannot be removed, we encounter an error.
+
+```plain
+thread 'main' panicked at src/main.rs:5:32:
+could not remove file: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+### Appending to a File in Rust : 
+
+* To append to a file in Rust, we should open the file in append mode. We can use the `append()` method in `std::fs::OpenOptions` which opens a file for appending. 
+* Then, we can use the `write()` method in `std::io::Write` trait to write data to the file. example,
+
+```rust
+use std::fs::OpenOptions;
+use std::io::Write;
+
+fn main(){
+   // open a file with append options
+   let mut data_file = OpenOptions::new()
+      .append(true)
+      .open("file.txt")
+      .expect("cannot open file");
+
+   // Write to a file
+   data_file
+      .write("I am learning Rust!".as_bytes())
+      .expect("Write failed");
+
+   println!("Append content to a file");
+}
+```
+
+* Output : 
+
+```plain
+Append content to a file
+```
+
+* Here, we import the `std::fs::OpenOptions` and `std::io::Write` module for appending to a file.
+* The `OpenOptions::new()` and `append(true)` method open the file `file.txt` for appending.
+* Next, we use the `write()` method from the `File` object to write additional content `I am learning Rust!` to the file.
+* To deal with the errors we chain the `expect()` method with a custom error message.
+
+
+
+### Example: All files operations : 
+
+
+```rust
+use std::fs::File;
+use std::io::Write;
+use std::io::Read;
+use std::fs::OpenOptions;
+use std::fs;
+
+fn main(){
+
+   // open a file
+   let mut data_file = File::open("file.txt").unwrap(); // open the file and return file object, open() return a "Result" enum.
+   println!("Data File: {:?}", data_file);  
+
+   // reading a file
+   let mut file_content = String::new();  // create an empty mutable string
+   data_file.read_to_string(&mut file_content).unwrap(); // copy the content of file to a mutable string
+
+   println!("File Content: {:?} ", file_content);
+
+   // appending a file : means, writing into an existing file
+   let mut data_file_temp = OpenOptions::new()
+      .append(true)
+      .open("file.txt")
+      .expect("Not opened");
+
+   data_file_temp
+      .write("\nmy name is sahil".as_bytes())
+      .expect("Write failed");
+
+   println!("Appended content to a file");
+
+
+   // writing a file : means creating a file 
+   let mut data_file_new = File::create("data.txt").expect("Creation failed");      // creation of new file
+
+   data_file_new.write("hello world!".as_bytes()).expect("Write failed");  // write content to a file
+   println!("Created a file data.txt");
+   // removing a file 
+
+   fs::remove_file("data.txt").expect("Could not remove file");
+
+   println!("Removed file data.txt");
+}
+```
+
+* Here, we have used the several imports for performing all the file operations. First we open the file, then we write read the content of the file, then we append some content into the existing file, then we created a new file by writing some content into the file, then we delete the file.
 
 
 
 
+
+
+
+
+
+
+## Rust Macro : 
+
+* 
