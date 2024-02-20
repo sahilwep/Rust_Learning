@@ -1,7 +1,0 @@
-hello
-I am learning Rust!my name is sahil
-my name is sahil
-my name is sahil
-my name is sahil
-my name is sahil
-my name is sahil
