@@ -1,15 +1,12 @@
-// A macro which uses repetitions
-macro_rules! repeat_print {
-   // match rule which matches multiple expression in an argument
-   ($($x: expr), *) => {
-      $(
-         println!("{}", $x);
-      )*
-   };
-}
-
+use std::thread;
 
 fn main(){
-   // call the macro with multiple arguments
-   repeat_print!(1, 2, 3, 4, 5);
+    let message = String::from("Sahilwep");
+
+    // using the message variable without a move
+    let handel = thread::spawn( move || {
+        println!("{}", message);
+    });
+
+    handel.join().unwrap();
 }

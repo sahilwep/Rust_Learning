@@ -5633,3 +5633,245 @@ println!("{}", 3); // matches argument 3
 ## Rust Threads :
 
 
+* A thread is the smaller executable unit of a process.
+
+* Threads allows us to split the computation in our program into multiple threads. Running multiple tasks at the same times can improve performance of the code.
+* However, it can add complexity.
+
+### Creating a New Thread in Rust :
+
+* In Rust, we can create a native operating system thread using the `thread::spawn()` function from the `std` module. The spawn method takes a closure as an argument.
+
+* Here is the syntax of `thread::spawn()`
+
+```rust
+thread::spawn( || {
+    // code to execute in the thread
+})
+```
+
+* Now, let's see an example.
+
+```rust
+use std::thread;
+use std::time::Duration;
+
+fn main(){
+    // create a thread
+    thread::spawn( || {
+        // everything in here runs in a separate thread
+        for i in 0..10 {
+            println!("{} from the spawned thread! ", i);
+            thread::sleep(Duration::from_millis(2));
+        }
+    });
+
+    // main thread
+    for i in 0..5 {
+        println!("{} from the main thread! ", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+}
+```
+
+* Output : 
+
+```plain
+0 from the main thread! 
+0 from the spawned thread! 
+1 from the main thread! 
+1 from the spawned thread! 
+2 from the main thread! 
+3 from the main thread! 
+2 from the spawned thread! 
+4 from the main thread! 
+```
+
+
+* In the example above, we create a thread using the `thread::spawn()` function. The thread loops over `0..5` and print the current value.
+* Similarly, we have a main thread where we loop over `0..5` and print the current value.
+* We also call `thread::sleep` to force a thread to stop it's execution for a short duration, allowing a different thread to run.
+* Notice that we sleep **2** millisecond in the spawned thread and 1 millisecond in the main thread.
+* The output from this program might be a little different every time. The important thing to remember here is that if the main thread completes, all threads are shut down whether or not they finished running.
+* So, even though the spawned thread should print `i` is 9, it only reaches to **2** because main thread shut down.
+
+
+### Join Handles in Rust : 
+
+* A spawned threat always return a join handle. If we want the spawned thread to complete execution, we can save the return value of `thread::spawn` in a variable and then call the `join()` method on it.
+* The `join` method on `JoinHandle`(return type of `thread::spawn`) waits for the spawned thread to finish.
+* Let's look at an example.
+  
+```rust
+use std::thread;
+use std::time::Duration;
+
+fn main(){
+    // create a thread and save the handle to a variable
+    let handel = thread::spawn( || {
+        // everything in here runs in separate thread
+        for i in 0..10 {
+            println!("{} form the spawned thread!", i);
+            thread::sleep(Duration::from_millis(2));
+        }
+    });
+
+    // main thread
+    for i in 0..5 {
+        println!("{} from the main thread!", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    // wait for the separate thread to complete
+    handel.join().unwrap();
+}
+
+```
+
+* Output : 
+```plain
+0 from the main thread!
+0 form the spawned thread!
+1 from the main thread!
+1 form the spawned thread!
+2 from the main thread!
+3 from the main thread!
+2 form the spawned thread!
+4 from the main thread!
+3 form the spawned thread!
+4 form the spawned thread!
+5 form the spawned thread!
+6 form the spawned thread!
+7 form the spawned thread!
+8 form the spawned thread!
+9 form the spawned thread!
+```
+
+* Here, we save the return of the `thread::spawn()` function and bind it to a variable called `handel`.
+
+* In the final line of the code, we call the `join()` method of th `handel`. Calling `join()` on the `handel` blocks the thread until the thread terminates.
+*  The two thread (main and spawned thread) continue alternating for some time, but the main thread waits because of `handel.join()` and does not end until the spawned thread is finished.
+*  If we move the `handel.join()` before the final loop, the output will charge and the print statement wont'be interleaved.
+
+```rust
+use std::thread;
+use std::time::Duration;
+
+fn main(){
+    // create a thread and save the handle to a variable
+    let handel = thread::spawn( || {
+        // everything in here runs in separate thread
+        for i in 0..10 {
+            println!("{} form the spawned thread!", i);
+            thread::sleep(Duration::from_millis(2));
+        }
+    });
+
+    // wait for the separate thread to complete
+    handel.join().unwrap();
+
+    // main thread
+    for i in 0..5 {
+        println!("{} from the main thread!", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+
+}
+```
+
+* Output : 
+
+```plain
+0 form the spawned thread!
+1 form the spawned thread!
+2 form the spawned thread!
+3 form the spawned thread!
+4 form the spawned thread!
+5 form the spawned thread!
+6 form the spawned thread!
+7 form the spawned thread!
+8 form the spawned thread!
+9 form the spawned thread!
+0 from the main thread!
+1 from the main thread!
+2 from the main thread!
+3 from the main thread!
+4 from the main thread!
+```
+* Thus, it's important to known where `join()` is called. I will dictate whether threads run at the same time or not.
+
+### Using move Closure with Threads in Rust : 
+
+* A value can be moved into a separate thread by passing it as an argument to the `thread::spawn()` function.
+
+```R
+use std::thread;
+
+fn main(){
+    // min thread starts here
+    let message = String::from("Hello, world!");
+
+    // move the message value to a separate thread
+    let handel = thread::spawn( move || {
+        println!("{}", message);
+    });
+
+    // waits for the thread to finish
+    handel.join().unwrap();
+}
+```
+
+* Output : `Hello, world!`
+
+* Here, the closure `||` passed to the `thread::spawn()` function uses the `move` keyword to indicate that it takes ownership of the `message` variable.
+
+* When a value is moved into a thread, ownership of the value is transfer to the thread, and the main thread can no longer access the value.
+
+* This means that the closure can use the `message` variable even after the main thread has completed.
+
+* Let's look at what happens if we don't use the `move` keyword in front of the closure.
+
+```R
+use std::thread;
+
+fn main(){
+    let message = String::from("Sahilwep");
+
+    // using the message variable without a move
+    let handel = thread::spawn( || {
+        println!("{}", message);
+    });
+
+    handel.join().unwrap();
+}
+```
+
+* Output : 
+
+```plain
+error[E0373]: closure may outlive the current function, but it borrows `message`, which is owned by the current function
+ --> src/main.rs:7:33
+  |
+7 |     let handel = thread::spawn( || {
+  |                                 ^^ may outlive borrowed value `message`
+8 |         println!("{}", message);
+  |                        ------- `message` is borrowed here
+  |
+```
+
+* The program is this code fails to compile. Here, Rust will try to borrow the `message` variable into the separate thread.
+
+```plain
+  |
+7 |     let handel = thread::spawn( || {
+  |                                 ^^ may outlive borrowed value `message`
+```
+
+* However, Rust doesn't know how long the spawned thread will run. Thus it can't tell if the reference to the `message` variable will always be valid.
+* By adding the `move` keyword before the closure, we focus the closure to take ownership of the `message` variable or any variable used inside closure.
+* We are telling Rust that the main thread won't use the `message` variable anymore. This is a classic example of Rust ownership and how it saves us from mishaps. 
+* **Note :** moving a value into a thread can be useful for parallelism, but it can also be a source of bugs if not used carefully.
+
+
+### Sending Message between Thread in Rust 
+
