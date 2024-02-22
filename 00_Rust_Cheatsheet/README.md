@@ -5875,3 +5875,72 @@ error[E0373]: closure may outlive the current function, but it borrows `message`
 
 ### Sending Message between Thread in Rust 
 
+* In Rust, threads can communicate with each other by sending message through channels. A channel is a way to send values between threads and it can be used to synchronize communication and avoid data races.
+* We can use the `channel()` function in the `std::sync::mspsc` module to create a channel in Rust.
+* Let's take a look at how we can use the channels to communicate between threads.
+
+```rust
+use std::thread;
+use std::sync::mpsc;
+
+fn main(){
+    // main thread start here
+    // create a new channel
+    let (sender, receiver) = mpsc::channel();
+
+    // spawn a new thread
+    let handel = thread::spawn( move || {
+        // receive message from channel
+        let message = receiver.recv().unwrap();
+
+        println!("Received message : {}", message);
+    });
+
+    let message = String::from("Sahilwep");
+    // send message to channel
+    sender.send(message).unwrap();
+
+    // wait for spawned thread to finish
+    handel.join().unwrap();
+}
+``` 
+* Output : 
+```plain
+Received message : Sahilwep
+```
+* Here, we create a channel using `channel()` function. The `std::sync::mpsc` module provide **multiple-producer, single-consumer** (mspc) channel that can be used to send value between threads.
+
+```rust
+// create a new channel
+let (sender, receiver) = mspc::channel();
+```
+* The `sender` and `receiver` variable represent the two endpoints of the channel. The sender endpoint is used to send messages, while the receiver endpoint is used to receive messages.
+```rust
+// spawn a new thread
+let handel = thead::spawn( move || {
+    // receive message from channel
+    let message = receiver.recv().unwrap();
+
+    println!("Received message : {}", message);
+});
+```
+
+* We also create a spawned thread using the `thread::spawn()` function. The closure passed to the function received a message using the `receiver.recv()` method.
+* The `recv()` method blocks until a message is received on the channel, and it return a `Result` indicating whether a message was received or an error occurred.
+
+```rust
+let message = String::from("sahilwep");
+// send message to channel
+sender.send(message).unwrap();
+```
+* In the main thread, a `message` is created and send using the `sender.send()` method. The `send()` method result a `Result` indicating whether the message was successfully send or an error occurred.
+```rust
+// wait for spawned thread to finish
+handel.join().unwrap();
+```
+* Finally, the `join()` method is called on the handle to wait for the spawned thread to finish before the program exits.
+
+* **NOTE :** Here, Another way to handle a `Result` is to use the `unwrap()` method, which will either return the successful value or panic if it's an error. This is useful when we are sure that the function call will always return a successful value and we want to simplify our code.
+
+
+***
