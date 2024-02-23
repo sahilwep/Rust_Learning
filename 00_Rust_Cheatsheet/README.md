@@ -5621,12 +5621,37 @@ println!("{}", 3); // matches argument 3
 
 * Thus, this macro `repeat_print()!` can print multiple expression in a concise and convenient manner, without having to write out the `println!` macro every time.
 
+### Rust Macro with return value : 
 
+* We can use return value in macro definition : 
+```rust
 
+macro_rules! match_value {
+    ($a: expr, $b: expr) => {
+        {
+            let mut res;
+            if $a == $b {
+                res = 1;
+            } else {
+                res = 0;
+            }
+            res
+        };
+    }
+}
 
+fn main(){
+    let a: i32 = 3;
+    let b: i32 = 4;
 
+    let v = match_value!(a, b);
 
+    println!("res = {v} ");
 
+}
+```
+
+* Here, in this code we used `res` variable to return from the `match_value!` macro.
 
 
 

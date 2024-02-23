@@ -56,15 +56,6 @@ If you're new to Rust, start with the basics. Check out the following resources 
     - Rust Threads
   
 
-## Table of Contents
-
-- [Rust Learning Repository](#rust-learning-repository)
-  - [Getting Started](#getting-started)
-  - [Rust CheatSheet](#rust-cheatsheet)
-  - [Table of Contents](#table-of-contents)
-  - [Contributing](#contributing)
-  - [Resources](#resources)
-
 
 
 ## Contributing
