@@ -2422,14 +2422,58 @@ fn main() {
 
 ## Rust Stack and Heap : 
 
+* Stack and Heap are parts of memory available to the Rust code to use at runtime.
+* Rust is memory-safe programming language. To ensure that rust is memory-safe, it introduce concept like ownership, references and borrowing.
+* To understand these concepts, we first understand how to allocate and deallocate memory in the Stack and Heap.
+
 ### The Stack 
+
+* The Stack can be through of as stack of book. When we add more books, we add them on the top of the pile. When we need to a book, we take one from the top.
+* The Stack insert value in order. It gets them and removes the values in the opposite order.
+  * Adding data is called **pushing onto the stack**
+  * Removing data is called **popping off the stack**
+* Data Stored on the stack must have a fixed size during compile time. Rust by default, allocate memory on the stack for primitive types. Example,
+
+```rust
+fn foo () {
+    let x = 999;
+    let y = 333;
+}
+fn main() {
+    let x = 100;
+
+    foo();
+}
+```
+* On stack first the `100` value will be inserted, then `999` then `333`.
+
+* Rust automatically does allocation and deallocation of memory in and out of the stack.
 
 ### The Heap 
 
+* As opposite to the stack, most of the time, we need to pass variable (memory) to different function and keep them alive for longer than a single function's execution. This is when we can use the `heap`.
+* We can allocate memory on the heap using the `Box<T>` type. For example,
+
+```rust
+fn main(){
+    let x = Box::new(100);
+    let y = 222;
+
+    println!("x = {}, y = {}" , x , y);
+}
+```
+* On memory first address on stack reserved for later allocation of memory address, let say `0` has value `???`, then the `222` will be allocated.
+* The pointer for first allocation will be pointed to heap memory let say `2342` with value `100` & this address will point to the `0` on stack.
 
 
+### Difference between Stack and Heap
 
-
+| `Stack` | `Heap` |
+|---------|--------|
+| Accessing data in the stack is faster.  | Accessing data in a heap is slower. |
+| Managing memory in the stack is predictable and trivial. | Managing memory for the heap (arbitrary size) is non-trivial. |
+| Rust stack allocates by default. | Box is used to allocate to the heap. |
+| Primitive types and local variables of a function are allocated on the stack. | Data types that are dynamic in size, such as `String`, `Vector`, `Box`, etc., are allocated on the heap. |
 
 
 
