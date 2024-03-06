@@ -74,6 +74,13 @@ Here are additional resources to help you further your Rust learning journey:
 
 - [Rust Documentation](https://doc.rust-lang.org/)
 - [Rust Forum](https://users.rust-lang.org/)
-- [Awesome Rust](https://github.com/rust-unofficial/awesome-rust) - A curated list of Rust code and resources.
+- [Awesome Rust](https://github.com/rust-unofficial/awesome-rust)
+- [A half hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
+- [Rust Cookbook](https://rust-lang-nursery.github.io/rust-cookbook/intro.html)
+- [Rustling](https://rustlings.cool/)
+- [Exercism](https://exercism.org/tracks/rust)
+- [Codewars](https://www.codewars.com/)
+- [codingame](https://www.codingame.com/ide/puzzle/onboarding)
+- [Rust Resources](https://github.com/ctjhoa/rust-learning)
 
 Happy coding with 🦀Rust!
