@@ -81,6 +81,7 @@ Here are additional resources to help you further your Rust learning journey:
 - [Exercism](https://exercism.org/tracks/rust)
 - [Codewars](https://www.codewars.com/)
 - [codingame](https://www.codingame.com/ide/puzzle/onboarding)
+- [Rust brown](https://rust-book.cs.brown.edu/)
 - [Rust Resources](https://github.com/ctjhoa/rust-learning)
 
 Happy coding with 🦀Rust!
