@@ -23,4 +23,17 @@
 
 * `Accessing data in the heap is slower than accessing data on the stack because we have to follow a pointer go get there`. contemporary processors are faster if they jump around less in memory. Continuing the analogy, consider a server at a restaurant taking orders from many tables. It's most efficient to get all the order at one table before moving on the next table. Taking an order from table A, then an order from table B, then one from A again, and then from B again would be a much slower process. By the same token, a processor can do its job better if it works on data that's close to other data(as it is on the stack) rather than farther away(as it can be on the heap).
 
-* `When our code calls a function, the values passed into the function(including, potentially, pointer to data on the heap) and the function's local variable get pushed onto the stack. when the function is over, those value get popped off the stack`.
+* `When our code calls a function, the values passed into the function(including, potentially, pointer(i.e on stack) to data(i.e on heap) on the heap) and the function's local variable get pushed onto the stack. when the function is over, those value get popped off the stack`.
+
+* Keeping track of what parts of code are using what data on the heap, minimizing the amount of duplicate data on the heap, and cleaning up unused data on the heap so we don't run out of space are all problems that ownership addresses. Once we understand ownership, we won't need to think about the stack and heap very often, but knowing that the main purpose of ownership is to manage heap can help explain why it works the way it does.
+
+## Ownership Rules: 
+
+* Keep these rule in mind as we work through the examples that illustrate them:
+  * `Each value in Rust has an owner`
+  * `There can only be one owner at a time`
+  * `When the owner goes out of scope, the value will be dropped`.
+
+
+
+
