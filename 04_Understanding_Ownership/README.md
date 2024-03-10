@@ -34,6 +34,105 @@
   * `There can only be one owner at a time`
   * `When the owner goes out of scope, the value will be dropped`.
 
+## Variable Scope:
 
+* Scope is the range within a program for which an item is valid. 
+
+```rust
+{       // s is not valid here, it's not yet declared
+    let s = "hello";    // s is valid from this point forward
+    // do stuff with s
+}       // this scope is now over, and s is no longer valid
+```
+* Points to remember here, 
+  * When `s` comes into scope, it is valid.
+  * It remains valid until it goes out of scope.
+
+
+***
+### String Literals & String Object
+
+#### **String Literals**
+
+* String literals (`&str`) are used when the value of a string is `known` at compile time. String literals are a set of characters, which are hardcoded into a variable for example, `let name = "Sahil"`. String literals are found in module `std::str`. String literals are also known as string slices.
+
+```rust
+fn main() {
+    let name: &str = "sahil";
+    let username:&'static str = "sahilwep"; // this way we can also declare string literals.
+}
+```
+* String literals are static and stored in the program's binary.
+* String literals are stored in the program's binary and typically reside in the read-only memory section. This memory is part of the executable file and is separate from the stack and heap used during runtime.
+
+#### **String Objects**
+
+* String object type is provided in Standard library. Unlike string literal, the string object type is not a part of core language. It is defined as public structure in standard library pub struct String. String is growable collection.
+* String are dynamic and stored in the heap.
+* They have a variable size and can grow or shrink at runtime.
+* Strings are mutable, and can modify their contents.
+* They are the type `String`
+
+```rust
+fn main() {
+    let mut name = String::from("Sahil");
+    let mut username = String::new();
+}
+```
+* (`String` objects), which are allocated on the heap at runtime and can change in size.
+
+* In Summary, String literals are compile-time constants with fixed size, while strings(String objects) are dynamic, heap-allocated data structure that can be modified during runtime.
+
+***
+## The String Type
+
+* We want to look at data that is stored on the heap and explore how Rust knows when to clean up that data, and the `String` type is great example.
+
+* We've already seen String literals, where a string value is hardcoded into our program. String literals are convenient, but they aren't suitable for every situation in which we may want to use text. One reason is that they're immutable. Another is that not every string value can be known when we write our code: For example, what if we wan't to take user input and store? For these situations, Rust has a second string type, `String`. This type manages data allocated on the heap and as such is able to store an amount of text that is unknown to us at compile time. You can create a `String` from string literal using the `form` function, like so:
+
+```rust
+let s = String::from("hello");
+```
+
+* The double colon `::` operator allows us to namespace this particular `from` function under the `String` type rather than using some sort of name like `string_from`. 
+
+* This kind of string can be mutated:
+```rust
+let mut s = String::from("Hello");
+s.push_str(", world!");     // push_str() appends a literal to a String
+println!("{}", s);  // This will print `hello world!`
+```
+* So , what's the difference here? Why can `String` be mutated but literals cannot? The difference is in how these two types deal with memory.
+
+
+### Memory and allocation:
+
+* In case of a String literal, we known the contents at compile time, so the text is hardcoded directly into the final executable. This is why string literals are fast and efficient. But these properties only come from the string literal's immutability. 
+
+* With the `String` type in order to support a mutable, growable piece of text, we need to allocate an amount of memory on the heap, unknown at compile time and hold the contents. This means:
+  * The memory must be requested from the memory allocator at runtime.
+  * We need a way of returning this memory to the allocator when we're done with our `String`.
+
+* That first part is done by when we call `String::from`, its implementation requests the memory it needs. This is pretty much universal in programming language.
+* However, the second part is different. In language with a *garbage collector*(GC), the GC keeps track of and cleans up memory that isn't being used anymore, and we don't need to think about it. In most language without a GC, It;s our responsibility to identify when memory is no longer being used and to call code to explicitly free it, just as we did to request it. Dong this correctly has historically been a difficult programming problem. If we forgot, we'll wast memory. If we do it too early, we'll have an invalid variable. If we do it twice, that's bug too. We need to pair exactly one `allocate` and exactly one `free`.
+
+* `Rust takes a different path: the memory is automatically returned once the variable that owns it goes out of scope`. Example using a `String` instead of a string literal:
+
+```rust
+{
+    let s = String::from("hello");      // s is valid from this point forward
+
+    // do stuff with s
+}   // this scope is now over, ans s is no longer valid.
+
+```
+
+* There is a natural point at which we can return the memory our `String` needs to the allocator: when `s` goes out of scope. When a variable goes out out of scope, Rust calls a special function for us. This function is called `drop`, and it's where the author of `String` can put the code to return the memory. Rust calls `drop` automatically at the closing curly bracket.
+
+* **NOTE:** In C++, this pattern of deallocating resources at the end of an item's lifetime is sometimes called *Resource Acquisition Is Initialization (RAII)*. The `drop` function in Rust will be familiar to you if you've used RAII patterns.
+
+* This pattern has a profound impact on the way Rust code is written. It may seems simple right now, but the behavior of code can be unexpected in more complicated situations when we want to have multiple variable use that data we've allocate on the heap. Let's explore some of those situations now.
+
+### Variables and Data Interacting with move:
 
 
