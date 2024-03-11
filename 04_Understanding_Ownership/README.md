@@ -134,5 +134,81 @@ println!("{}", s);  // This will print `hello world!`
 * This pattern has a profound impact on the way Rust code is written. It may seems simple right now, but the behavior of code can be unexpected in more complicated situations when we want to have multiple variable use that data we've allocate on the heap. Let's explore some of those situations now.
 
 ### Variables and Data Interacting with move:
+* Multiple variable can interact with the same data in different ways in Rust. let's look at an example using an integer: 
 
+```rust
+let x = 5;
+let y = x;
+```
+
+* We bind the value `5` to `x`; then  make a copy of the value in `x` and bind it to `y`. We now have two variables, `x` and `y`, and both are equal `5`. This is indeed what is happening, because integers are simple values with known, fixed size, and these two `5` value are pushed onto the stack.
+
+* Now let's look at the `String` version:
+```rust
+let s1 = String::from("hello");
+let s2 = s1;
+```
+
+* This looks very similar, so we might assume that the way it works be the same: that is, the second line would make a copy of the value in `s1` and bind it to `s2`. But this isn't quite what happens.
+
+* Take a look at figure 4.1, A `String` is made up of three parts, shown on the left: a pointer to the memory that holds the contents of the string, a length and a capacity. This group of data is stored on the stack, On the right is the memory on the heap that holds the contents.
+  
+* Fig 4.1 ![image](/04_Understanding_Ownership/assets/img1.png)
+
+* The length is how much memory, in bytes, the contents of the `String` are currently using. The capacity is the total amount of memory, in bytes, that the `String` has received from the allocator. The difference between length and capacity matters, but not in this context, so for now, it's fine to ignore the capacity.
+
+* When we assign `s1` to `s2`, the `String` data is copied, meaning we copied the pointer, the length, and capacity that are on the stack we do not copy the data on the heap that the pointer refers to. In other words, the data representation in memory looks like figure 4.2:
+
+* fig: 4.2 ![image](/04_Understanding_Ownership/assets/img2.png)
+
+* The representation does not look like in below figure 4.3, which is what memory would look like if Rust instead copied the heap data as well. If Rust did this, the operation `s2 = s1` could be very expensive in terms of runtime performance if the data on the heap were large.
+
+* fig 4.3  ![image](/04_Understanding_Ownership/assets/img3.png)
+
+* Earlier, we said that when variable goes out of scope, Rust automatically calls the `drop` function and cleans up the heap memory for that variable. But in fig 4.2 shows both data pointer pointing to the same location. This is a problem: when `s2` and `s1` go out of scope, they will both try to free the same memory. This is known as *double free* error and is one of the memory safety bugs we mentioned previously. Freeing memory twice can lead to memory corruption, which can potentially lead to security vulnerabilities.
+
+* To ensure memory safety, after the line `let s2 = s1`, Rust considers `s1` as no longer valid. Therefore, Rust doesn't need to free anything when `s1` goes out of scope. Check out what happens when you try to use `s1` after `s2` is created: it won't work:
+
+```rust
+let s1 = String::from("hello");
+let s2 = s1;
+
+println!("{}", s1);
+```
+* You'll get an error like this because Rust prevents you from using the invalidate reference:
+
+```sh
+$ cargo run
+   Compiling ownership v0.1.0 (file:///projects/ownership)
+error[E0382]: borrow of moved value: `s1`
+ --> src/main.rs:5:28
+  |
+2 |     let s1 = String::from("hello");
+  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+3 |     let s2 = s1;
+  |              -- value moved here
+4 |
+5 |     println!("{}, world!", s1);
+  |                            ^^ value borrowed here after move
+  |
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     let s2 = s1.clone();
+  |                ++++++++
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `ownership` due to previous error
+```
+
+* If you've heard the term *shallow copy* and *deep copy* while working with other languages, the concept of copying the pointer, length, and capacity without copying the data probably sounds like making a shallow copy. But because Rust also invalidates the first variable, instead of being called a shallow copy, it's known as a ***move***. In this example, we would say that `s1` was *moved* into `s2`. So what actually happens is shown in figure 4.4
+
+* Fig 4.4 ![image](/04_Understanding_Ownership/assets/img4.png)
+
+* This solves our problem! With only `s2` valid, when it goes out of scope it alone will free the memory, and we're done.
+
+* In addition, there's a design choice that's implemented by this: Rust will never automatically create "deep" copies of your data. Therefore, any *automatic* copying can be assumed to be inexpensive in terms of runtime performance.
+
+
+### Variable and Data interacting with Clone
 

@@ -1,5 +1,5 @@
 /*
-
+// Understanding Ownership
 
 
 */
@@ -14,6 +14,8 @@ fn main() {
     }   // scope ends here for variable value
 
     
+    // variable and data interacting with move
 
+    
 
 }
