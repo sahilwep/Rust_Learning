@@ -212,3 +212,32 @@ error: could not compile `ownership` due to previous error
 
 ### Variable and Data interacting with Clone
 
+* If we do want to deeply copy the heap of the `String`, not just the stack data, we can use a common method called `clone`. We'll discuss method syntax later on, but because methods are a common features in many programming languages, you've probably seen them before. Example of the `clone()` method in action: 
+
+```rust
+let s1 = String::from("hello");
+let s2 = s1.clone();
+
+println!("s1 = {}, s2 = {}", s1, s2);
+```
+
+* This works just fine and explicitly produces the behavior shown in figure 4.3, where the heap data gets copied.
+
+* When you see the `clone` you known that some arbitrary code is being executed and that code may be expensive. it's a visual indicator that something different is going on.
+
+### Stack-Only Data: Copy
+
+* There's another wrinkle we haven't talked about yet. This code using integer-part of which was shown in Listing 4.2-works and is valid:
+
+```rust
+let x = 5;
+let y = x;
+
+println!("x = {}, y = {}", x, y);
+```
+
+* But this code seems to contradict what we just learned: we don't have to call to `clone`, but `x` is still valid and wasn't moved into `y`.
+
+* This reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. Thats means there's no reason we would want to prevent `x` from being valid after we create the variable `y`. In other words, there's no difference between deep and shallow copying here, so calling `clone` wouldn't do anything different from the usual shallow copying, and we can leave it out.
+
+* Rust has a special annotation called the `Copy` trait that we can place on types that are stored on the stack, as integers are. If a type implements the `Copy` trait, variable that use it do not move, but rather are trivially copied, making them still valid after assigning to another variable.
