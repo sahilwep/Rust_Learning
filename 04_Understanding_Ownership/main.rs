@@ -1,8 +1,8 @@
 /*
 // Understanding Ownership
 
-
 */
+
 
 fn main() {
     let s: &str = "sahilwep"; // this string literals, which is immutable in nature

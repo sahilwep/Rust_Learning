@@ -241,3 +241,12 @@ println!("x = {}, y = {}", x, y);
 * This reason is that types such as integers that have a known size at compile time are stored entirely on the stack, so copies of the actual values are quick to make. Thats means there's no reason we would want to prevent `x` from being valid after we create the variable `y`. In other words, there's no difference between deep and shallow copying here, so calling `clone` wouldn't do anything different from the usual shallow copying, and we can leave it out.
 
 * Rust has a special annotation called the `Copy` trait that we can place on types that are stored on the stack, as integers are. If a type implements the `Copy` trait, variable that use it do not move, but rather are trivially copied, making them still valid after assigning to another variable.
+
+* Rust won't let us annotate a type with `Copy` if the type, or any of its parts, has implemented the `Drop` trait. If the type needs something special to happen when the value goes out of scope and we add the `Copy` annotation to that type, we'll get a compile-time error.
+
+* So, what type implement the `Copy` trait? You can check the documentation for the given type to be sure, but as a general rule, any group of simple scalar value can implement `Copy`. Here are some of the type that implement `Copy`:
+  * All the integer types, such as `u32`
+  * The Boolean type, `bool`, with values `true` and `false`.
+  * All the floating-point type, such as `f64`.
+  * The character type, `char`.
+  * Tuples, if they only contain type that also implement `Copy`. For example, `(i32, i32) ` implement `Copy` but `(i32, String)` does not.
