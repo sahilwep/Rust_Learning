@@ -540,3 +540,76 @@ fn main() {
 
 ### Dangling References: 
 
+* In language with pointers, it's easy to erroneously create a *dangling pointer* - a pointer that references a location in memory that may have been given to someone else-by freeing some memory while preserving a pointer to that memory. In Rust, by contrast, the compiler guarantees that reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.
+
+* Let's try create a dangling references to see how rust prevents them with a compile-time error:
+
+```rust
+fn main() {
+    let reference_to_noting = dangle();
+}
+
+fn dangle() -> &String {
+    let s = String::from("hello");
+
+    &s
+}
+```
+
+* Output: Error
+
+```sh
+$ cargo run
+error[E0106]: missing lifetime specifier
+ --> main.rs:5:16
+  |
+5 | fn dangle() -> &String {
+  |                ^ expected named lifetime parameter
+  |
+  = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+help: consider using the `'static` lifetime
+  |
+5 | fn dangle() -> &'static String {
+  |                 +++++++
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0106`.
+```
+
+* The error message refers to a feature we haven't covered yet: lifetimes. We'll discuss lifetimes in detail in Chapter 10. But, if you disregard the part about lifetimes, the message does contain the key to why this code is a problem.
+
+```plain
+this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+```
+* Let's take a closer look at exactly what's happening at each stage of our `dangle` code:
+
+```rust
+fn dangle() -> &String { // dangle returns a reference to a String
+
+    let s = String::from("hello"); // s is a new String
+
+    &s // we return a reference to the String, s
+} // Here, s goes out of scope, and is dropped. Its memory goes away.
+  // Danger!
+```
+
+* Because `s` is created inside the `dangle`, when the code of `dangle` is finished, `s` will be deallocated. But we tried to return a reference to it. That means this reference would be pointing to an invalid `String` That's no good! Rust won't let us do this. 
+* The solution here is to return the `String` directly:
+
+```rust
+fn no_dangle() -> String {
+  let s = String::from("hello");
+
+  s
+}
+```
+* This works without any problem. Ownership is moved out, and nothing is deallocated.
+
+### The Rules of References:
+
+* Let's recap what we've discussed about references:
+  * At any given time, you can have *either* one mutable reference or any number of immutable references.
+  * References must always be valid.
+* Next, we'll look at a different kind of references: slices.
+
