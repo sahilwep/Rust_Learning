@@ -250,3 +250,89 @@ println!("x = {}, y = {}", x, y);
   * All the floating-point type, such as `f64`.
   * The character type, `char`.
   * Tuples, if they only contain type that also implement `Copy`. For example, `(i32, i32) ` implement `Copy` but `(i32, String)` does not.
+
+
+### Ownership and Functions
+
+* The mechanics of passing a values to a functions are similar to those when assigning a value to a variable. Passing a variable to a function will move or copy, just as assignment does.
+* Example: 
+
+```rust
+fn main() {
+    let s = String::from("hello");  // s comes into scope
+    takes_ownership(s);     // s values moved into the function..., and so is no longer valid here.
+
+    let x = 5;      // x comes into scope
+
+    makes_copy(x);      // x would move into the function, but 'i32' is Copy, so it's okay to still use x afterward
+
+}   // here, x goes out of scope, then s. But because s's value was moved, nothing special happens.
+
+
+fn takes_ownership(some_string: String) {
+    println!("{}", some_string);
+}   // here, some_string goes out of scope and `drop` is called. The backing memory is freed.
+
+
+fn makes_copy(some_integer: i32) {  // some_integer comes into scope
+    println!("{}", some_integer);
+}   // here, some_integer goes out of scope. 
+```
+
+* If we tried to use `s` after the call to `takes_ownership`, Rust would throw a compile-time error. These static checks protects us from mistakes. Try adding code to `main` that uses `s` and `x` to see where you can use them and where the ownership rules prevent you from doing so.
+
+
+### Return Values and Scope
+
+* Returning values can also transfer ownership. below shown an example of function that returns some value, with similar annotations as those in above example.
+
+```rust
+fn main() {
+    let s1 = gives_ownership();     // gives_ownership moves its return value into s1
+
+    let s2 = String::from("hello");     // s2 comes into scope
+
+    let s3 = takes_and_gives_back(s2);      // s2 is moved into takes_and_give_back, which also moves its return value into s3 
+
+}   // here, s3 goes out of scope and is dropped. s2 was moved, so nothing happens. s1 goes out of scope and is dropped.
+
+
+fn gives_ownership() -> String {    // gives_ownership will move its return value into the function that calls it
+
+    let some_string = String::from("yours");    // some_string comes into scope
+
+    some_string // some_string is returned and moves out to the calling function
+}
+
+fn takes_and_gives_back(a_String: String) -> String {       // some_string comes into scope
+    a_String        // some_string is returned and moves out to the calling function
+}
+```
+
+* The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by `drop` unless ownership of the data has been moved to another variable.
+
+* While this works, taking ownership and then returning ownership with every function is a bit tedious. What if we want to let a function use a value but not take ownership? It's quite annoying that anything we pass in also needs to be passed back if we want to use it again, in addition to any data resulting from the body of the function that we might want to return as well.
+
+* Rust does let us return multiple value using a tuple, as shown in below example:
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+    
+    let (s2, len) = calculate_length(s1);
+
+    println!("The length of '{}' is '{}'", s2, len);
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len();   // len() returns the length of a String
+
+    (s, length)
+}
+```
+* But this is too much ceremony and a lot of work for a concept that should be common. Luckily for us, Rust has a feature for using a value without transferring ownership, called *references*
+
+
+## References and Borrowing
+
+* 
